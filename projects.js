@@ -55,11 +55,10 @@ async function loadProjects() {
         const repos = await fetchRepositories();
         console.log(`Found ${repos.length} total repositories`);
 
-        // Filter out forks and private repos, only include repos with content
+        // Filter out forks and private repos
         const validRepos = repos.filter(repo =>
             !repo.fork &&
             !repo.private &&
-            repo.size > 0 &&
             repo.name !== `${GITHUB_USERNAME}.github.io` // Exclude portfolio repo
         );
         console.log(`Filtered to ${validRepos.length} valid repositories`);
