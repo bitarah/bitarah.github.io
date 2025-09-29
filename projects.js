@@ -45,12 +45,15 @@ function setupEventListeners() {
 }
 
 async function loadProjects() {
+    console.log('Starting to load projects...');
     showLoading();
     hideError();
 
     try {
+        console.log('Fetching repositories...');
         // Fetch repositories
         const repos = await fetchRepositories();
+        console.log(`Found ${repos.length} total repositories`);
 
         // Filter out forks and private repos, only include repos with content
         const validRepos = repos.filter(repo =>
@@ -59,23 +62,28 @@ async function loadProjects() {
             repo.size > 0 &&
             repo.name !== `${GITHUB_USERNAME}.github.io` // Exclude portfolio repo
         );
+        console.log(`Filtered to ${validRepos.length} valid repositories`);
 
         // Fetch additional data for each repository
+        console.log('Enriching repository data...');
         const repositoriesWithData = await Promise.all(
             validRepos.map(repo => enrichRepositoryData(repo))
         );
+        console.log('Repository data enrichment completed');
 
         allRepositories = repositoriesWithData;
         filteredRepositories = [...allRepositories];
 
+        console.log('Updating UI...');
         updateStats();
         populateLanguageFilter();
         filterAndSortProjects();
         hideLoading();
+        console.log('Projects loaded successfully');
 
     } catch (error) {
         console.error('Error loading projects:', error);
-        showError('Failed to load repositories. Please check your internet connection and try again.');
+        showError(`Failed to load repositories: ${error.message}`);
         hideLoading();
     }
 }
@@ -94,20 +102,30 @@ async function fetchRepositories() {
 }
 
 async function enrichRepositoryData(repo) {
+    console.log(`Enriching data for ${repo.name}...`);
     const enrichedRepo = { ...repo };
 
     try {
-        // Fetch OVERVIEW.md
-        enrichedRepo.overview = await fetchFileContent(repo.name, 'OVERVIEW.md');
+        // Use Promise.allSettled to avoid blocking on failed requests
+        const [overviewResult, skillsResult, imagesResult] = await Promise.allSettled([
+            fetchFileContent(repo.name, 'OVERVIEW.md'),
+            fetchFileContent(repo.name, 'SKILLS.md'),
+            fetchImageAssets(repo.name)
+        ]);
 
-        // Fetch SKILLS.md
-        enrichedRepo.skills = await fetchFileContent(repo.name, 'SKILLS.md');
+        // Handle results
+        enrichedRepo.overview = overviewResult.status === 'fulfilled' ? overviewResult.value : null;
+        enrichedRepo.skills = skillsResult.status === 'fulfilled' ? skillsResult.value : null;
+        enrichedRepo.images = imagesResult.status === 'fulfilled' ? imagesResult.value : [];
 
-        // Fetch images from IMAGE_ASSETS folder
-        enrichedRepo.images = await fetchImageAssets(repo.name);
+        console.log(`Enriched ${repo.name}: overview=${!!enrichedRepo.overview}, skills=${!!enrichedRepo.skills}, images=${enrichedRepo.images.length}`);
 
     } catch (error) {
         console.warn(`Error enriching repository ${repo.name}:`, error);
+        // Initialize empty values to prevent errors
+        enrichedRepo.overview = null;
+        enrichedRepo.skills = null;
+        enrichedRepo.images = [];
     }
 
     return enrichedRepo;
@@ -115,14 +133,26 @@ async function enrichRepositoryData(repo) {
 
 async function fetchFileContent(repoName, fileName) {
     try {
-        const response = await fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/contents/${fileName}`);
+        // Add timeout to prevent hanging requests
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+        const response = await fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/contents/${fileName}`, {
+            signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
 
         if (response.ok) {
             const data = await response.json();
             return atob(data.content).replace(/\n/g, ' ').trim();
         }
     } catch (error) {
-        console.warn(`Could not fetch ${fileName} for ${repoName}`);
+        if (error.name === 'AbortError') {
+            console.warn(`Timeout fetching ${fileName} for ${repoName}`);
+        } else {
+            console.warn(`Could not fetch ${fileName} for ${repoName}:`, error);
+        }
     }
 
     return null;
@@ -130,7 +160,15 @@ async function fetchFileContent(repoName, fileName) {
 
 async function fetchImageAssets(repoName) {
     try {
-        const response = await fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/contents/IMAGE_ASSETS`);
+        // Add timeout to prevent hanging requests
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+        const response = await fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/contents/IMAGE_ASSETS`, {
+            signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
 
         if (response.ok) {
             const files = await response.json();
@@ -143,7 +181,11 @@ async function fetchImageAssets(repoName) {
                 }));
         }
     } catch (error) {
-        console.warn(`Could not fetch IMAGE_ASSETS for ${repoName}`);
+        if (error.name === 'AbortError') {
+            console.warn(`Timeout fetching IMAGE_ASSETS for ${repoName}`);
+        } else {
+            console.warn(`Could not fetch IMAGE_ASSETS for ${repoName}:`, error);
+        }
     }
 
     return [];
@@ -222,7 +264,6 @@ function renderProjects() {
 
 function createProjectCard(repo) {
     const languageColor = LANGUAGE_COLORS[repo.language] || '#71717a';
-    const updatedDate = new Date(repo.updated_at).toLocaleDateString();
 
     const overviewSection = repo.overview ? `
         <div class="project-overview">
@@ -359,19 +400,4 @@ function hideError() {
 }
 
 // Mobile menu functionality (inherited from main portfolio)
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-
-if (hamburger && navMenu) {
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
-    });
-}
+// Note: Hamburger functionality is handled by script.js to avoid variable conflicts
