@@ -11,194 +11,351 @@
     <style>
         .education-timeline {
             position: relative;
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 2rem 0;
+            padding: 3rem 0;
         }
-        .education-timeline::after {
-            content: '';
+
+        /* Vertical timeline line */
+        .timeline-line {
             position: absolute;
-            width: 4px;
-            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+            left: 50%;
             top: 0;
             bottom: 0;
-            left: 50%;
-            margin-left: -2px;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
             border-radius: 2px;
+            transform: translateX(-50%);
         }
-        .education-item {
-            padding: 1rem 2rem;
-            position: relative;
-            background-color: inherit;
-            width: 50%;
-            margin-bottom: 2rem;
-        }
-        .education-item::after {
-            content: '';
+
+        /* Timeline progress indicator */
+        .timeline-progress {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            right: -12px;
-            background-color: var(--bg-color);
-            border: 4px solid var(--primary-color);
-            top: 2rem;
-            border-radius: 50%;
-            z-index: 1;
-        }
-        .education-item:nth-child(even) {
             left: 50%;
+            top: 0;
+            width: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            transition: height 0.3s ease;
+            height: 0%;
+            z-index: 2;
         }
-        .education-item:nth-child(even)::after {
-            left: -12px;
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .education-item:nth-child(odd) {
-            left: 0;
+
+        .timeline-item.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
+
+        /* Alternating layout */
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 60%;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 60%;
+            text-align: left;
+        }
+
+        /* Timeline dots */
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 24px;
+            height: 24px;
+            background: var(--bg-color);
+            border: 6px solid var(--primary-color);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            transition: all 0.5s ease;
+        }
+
+        .timeline-item.animate .timeline-dot {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+        }
+
+        /* Education cards */
         .education-card {
             background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
             position: relative;
+            overflow: hidden;
         }
-        .education-card:hover {
+
+        .education-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .timeline-item.animate .education-card {
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
             transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
+
         .education-header {
             display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
         }
-        .university-logo {
-            width: 70px;
-            height: 70px;
-            background: var(--primary-color);
-            border-radius: 12px;
+
+        .institution-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1.5rem;
             color: white;
-            font-size: 1.8rem;
+            font-size: 2rem;
+            flex-shrink: 0;
+            box-shadow: 0 8px 24px rgba(34, 211, 238, 0.3);
         }
-        .education-info h3 {
-            color: var(--text-color);
-            margin: 0 0 0.5rem 0;
-            font-size: 1.4rem;
+
+        .education-info {
+            flex: 1;
+            min-width: 0;
         }
-        .university-name {
+
+        .institution-name {
             color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.2rem;
+            font-weight: 700;
+            font-size: 1.3rem;
             margin-bottom: 0.5rem;
         }
+
+        .degree-title {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.75rem 0;
+            line-height: 1.3;
+        }
+
         .education-period {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .education-description {
-            margin: 1.5rem 0;
-            color: var(--text-color);
-            line-height: 1.7;
-        }
-        .courses-section {
-            margin-top: 2rem;
-        }
-        .courses-section h4 {
-            color: var(--text-color);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .course-item {
-            background: var(--bg-color);
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-color);
-            transition: all 0.3s ease;
-        }
-        .course-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        .course-item h5 {
-            color: var(--primary-color);
-            margin: 0 0 0.5rem 0;
             font-size: 0.95rem;
-        }
-        .course-provider {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            font-style: italic;
-        }
-        .volunteer-section {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-        .volunteer-section h4 {
-            color: var(--text-color);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            margin-bottom: 0.75rem;
         }
-        .volunteer-item {
-            background: var(--bg-color);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary-color);
-        }
-        .volunteer-item p {
-            margin: 0;
-            color: var(--text-color);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        .specialization {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+
+        .specialization-tag {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
             color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
             display: inline-block;
+        }
+
+        .education-description {
+            margin: 2rem 0;
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Courses sections */
+        .courses-section {
+            margin-top: 2.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .section-header i {
+            color: var(--primary-color);
+            width: 20px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .course-card {
+            background: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-color);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
+        }
+
+        .course-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .course-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .course-provider {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .course-date {
+            color: var(--text-muted);
+            font-size: 0.8rem;
             margin-top: 0.5rem;
         }
+
+        /* Volunteer section */
+        .volunteer-section {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .volunteer-card {
+            background: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.4s ease;
+        }
+
+        .volunteer-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .volunteer-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .volunteer-description {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Mobile responsiveness */
         @media (max-width: 768px) {
-            .education-timeline::after {
-                left: 20px;
+            .timeline-line,
+            .timeline-progress {
+                left: 30px;
+                transform: none;
             }
-            .education-item {
-                width: 100%;
-                padding-left: 3rem;
-                padding-right: 1rem;
+
+            .timeline-dot {
+                left: 30px;
+                transform: none;
             }
-            .education-item::after {
-                left: 12px;
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 80px;
+                margin-right: 0;
+                text-align: left;
             }
-            .education-item:nth-child(even) {
-                left: 0;
+
+            .education-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
+
             .courses-grid {
                 grid-template-columns: 1fr;
             }
+
+            .institution-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .degree-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Add to existing styles */
+        .add-course-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-color);
+            border-radius: 12px;
+            border: 2px dashed var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .add-course-section:hover {
+            border-color: var(--primary-color);
+            background: rgba(34, 211, 238, 0.05);
+        }
+
+        .add-course-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem;
         }
     </style>
 </head>
@@ -244,144 +401,10 @@
                 </p>
             </header>
 
-            <div class="education-timeline">
-                <div class="education-item">
-                    <div class="education-card">
-                        <div class="education-header">
-                            <div class="university-logo">
-                                <i class="fas fa-university"></i>
-                            </div>
-                            <div class="education-info">
-                                <div class="university-name">Politecnico di Milano</div>
-                                <h3>Master of Science in Telecommunication Engineering</h3>
-                                <div class="education-period">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    February 2021 - September 2024
-                                </div>
-                                <div class="specialization">Wireless Networks & AI Applications in Telecom</div>
-                            </div>
-                        </div>
-
-                        <div class="education-description">
-                            Specialized in wireless networks, AI applications in telecommunications, and optical transport networks.
-                            Focused on advanced signal processing, communication network design, and machine learning applications
-                            for next-generation wireless systems.
-                        </div>
-
-                        <div class="courses-section">
-                            <h4><i class="fas fa-book"></i> Key University Courses</h4>
-                            <div class="courses-grid">
-                                <div class="course-item">
-                                    <h5>Advanced Digital Signal Processing</h5>
-                                    <div class="course-provider">Politecnico di Milano</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Communication Network Design</h5>
-                                    <div class="course-provider">Politecnico di Milano</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Mobile Radio Network</h5>
-                                    <div class="course-provider">Politecnico di Milano</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Information Theory</h5>
-                                    <div class="course-provider">Politecnico di Milano</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Artificial Neural Networks and Deep Learning</h5>
-                                    <div class="course-provider">Politecnico di Milano</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Internet of Things</h5>
-                                    <div class="course-provider">Politecnico di Milano</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Image Analysis and Computer Vision</h5>
-                                    <div class="course-provider">Politecnico di Milano</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Wireless Internet</h5>
-                                    <div class="course-provider">Politecnico di Milano</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="courses-section">
-                            <h4><i class="fas fa-laptop-code"></i> Additional Professional Courses</h4>
-                            <div class="courses-grid">
-                                <div class="course-item">
-                                    <h5>Reinforcement Learning</h5>
-                                    <div class="course-provider">Hugging Face</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Machine Learning</h5>
-                                    <div class="course-provider">Google Developers</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Machine Learning Specialization</h5>
-                                    <div class="course-provider">Prof. Andrew Ng, Coursera</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Advanced OpenCV with Python</h5>
-                                    <div class="course-provider">Pysourse</div>
-                                </div>
-                                <div class="course-item">
-                                    <h5>Advanced Python Programming</h5>
-                                    <div class="course-provider">Faradars</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="education-item">
-                    <div class="education-card">
-                        <div class="education-header">
-                            <div class="university-logo">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div class="education-info">
-                                <div class="university-name">Shiraz University</div>
-                                <h3>Bachelor of Science in Electrical Engineering</h3>
-                                <div class="education-period">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    September 2015 - July 2020
-                                </div>
-                                <div class="specialization">Focus on Communications</div>
-                            </div>
-                        </div>
-
-                        <div class="education-description">
-                            Built a solid foundation in signal processing, communication theory, and electronic systems.
-                            Focused on communications engineering with emphasis on digital signal processing,
-                            network analysis, and system design fundamentals.
-                        </div>
-
-                        <div class="courses-section">
-                            <h4><i class="fas fa-workshop"></i> Additional Training & Workshops</h4>
-                            <div class="course-item">
-                                <h5>Deep Learning Workshop</h5>
-                                <div class="course-provider">IEEE Shiraz University Student Branch</div>
-                            </div>
-                        </div>
-
-                        <div class="volunteer-section">
-                            <h4><i class="fas fa-hands-helping"></i> Volunteer Work & Leadership</h4>
-
-                            <div class="volunteer-item">
-                                <p><strong>Member of IEEE Shiraz University Student Branch</strong> - Actively participated in professional development activities, technical workshops, and student community initiatives.</p>
-                            </div>
-
-                            <div class="volunteer-item">
-                                <p><strong>Campus Charity Initiative</strong> - Supported local charity causes by organizing fundraising activities and coordinating community outreach programs.</p>
-                            </div>
-
-                            <div class="volunteer-item">
-                                <p><strong>Student Orientation Organizer</strong> - Organized informational conferences on Electrical Engineering branches for new students, helping them understand different specialization paths and career opportunities.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="education-timeline" id="timeline">
+                <div class="timeline-line"></div>
+                <div class="timeline-progress" id="timelineProgress"></div>
+                <!-- Education items will be dynamically generated -->
             </div>
 
             <div class="closing-brace">
@@ -397,5 +420,267 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Education data structure - easily modifiable
+        const educationData = [
+            {
+                id: 'masters',
+                type: 'degree',
+                institution: 'Politecnico di Milano',
+                degree: 'Master of Science in Telecommunication Engineering',
+                period: 'February 2021 - September 2024',
+                location: 'Milan, Italy',
+                specialization: 'Wireless Networks & AI Applications in Telecom',
+                icon: 'fas fa-university',
+                description: 'Specialized in wireless networks, AI applications in telecommunications, and optical transport networks. Focused on advanced signal processing, communication network design, and machine learning applications for next-generation wireless systems.',
+                gpa: '110/110 cum laude', // Add if you want to display GPA
+                universityCourses: [
+                    { name: 'Advanced Digital Signal Processing', provider: 'Politecnico di Milano', type: 'university' },
+                    { name: 'Communication Network Design', provider: 'Politecnico di Milano', type: 'university' },
+                    { name: 'Mobile Radio Network', provider: 'Politecnico di Milano', type: 'university' },
+                    { name: 'Information Theory', provider: 'Politecnico di Milano', type: 'university' },
+                    { name: 'Artificial Neural Networks and Deep Learning', provider: 'Politecnico di Milano', type: 'university' },
+                    { name: 'Internet of Things', provider: 'Politecnico di Milano', type: 'university' },
+                    { name: 'Image Analysis and Computer Vision', provider: 'Politecnico di Milano', type: 'university' },
+                    { name: 'Wireless Internet', provider: 'Politecnico di Milano', type: 'university' }
+                ],
+                professionalCourses: [
+                    { name: 'Reinforcement Learning', provider: 'Hugging Face', date: '2024', type: 'online' },
+                    { name: 'Machine Learning', provider: 'Google Developers', date: '2024', type: 'online' },
+                    { name: 'Machine Learning Specialization', provider: 'Prof. Andrew Ng, Coursera', date: '2023', type: 'online' },
+                    { name: 'Advanced OpenCV with Python', provider: 'Pysourse', date: '2023', type: 'online' },
+                    { name: 'Advanced Python Programming', provider: 'Faradars', date: '2022', type: 'online' },
+                    // Add more courses here as you complete them
+                    // { name: 'New Course Name', provider: 'Provider', date: '2024', type: 'online' }
+                ]
+            },
+            {
+                id: 'bachelors',
+                type: 'degree',
+                institution: 'Shiraz University',
+                degree: 'Bachelor of Science in Electrical Engineering',
+                period: 'September 2015 - July 2020',
+                location: 'Shiraz, Iran',
+                specialization: 'Focus on Communications',
+                icon: 'fas fa-graduation-cap',
+                description: 'Built a solid foundation in signal processing, communication theory, and electronic systems. Focused on communications engineering with emphasis on digital signal processing, network analysis, and system design fundamentals.',
+                additionalTraining: [
+                    { name: 'Deep Learning Workshop', provider: 'IEEE Shiraz University Student Branch', date: '2019', type: 'workshop' }
+                ],
+                volunteerWork: [
+                    {
+                        title: 'Member of IEEE Shiraz University Student Branch',
+                        description: 'Actively participated in professional development activities, technical workshops, and student community initiatives.'
+                    },
+                    {
+                        title: 'Campus Charity Initiative',
+                        description: 'Supported local charity causes by organizing fundraising activities and coordinating community outreach programs.'
+                    },
+                    {
+                        title: 'Student Orientation Organizer',
+                        description: 'Organized informational conferences on Electrical Engineering branches for new students, helping them understand different specialization paths and career opportunities.'
+                    }
+                ]
+            }
+        ];
+
+        // Function to create education timeline
+        function createEducationTimeline() {
+            const timeline = document.getElementById('timeline');
+
+            educationData.forEach((item, index) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.innerHTML = createEducationItemHTML(item, index);
+                timeline.appendChild(timelineItem);
+            });
+        }
+
+        // Function to create HTML for each education item
+        function createEducationItemHTML(item, index) {
+            let courseSections = '';
+
+            // University courses
+            if (item.universityCourses) {
+                courseSections += `
+                    <div class="courses-section">
+                        <div class="section-header">
+                            <i class="fas fa-book"></i>
+                            <span>Key University Courses</span>
+                        </div>
+                        <div class="courses-grid">
+                            ${item.universityCourses.map(course => `
+                                <div class="course-card">
+                                    <div class="course-title">${course.name}</div>
+                                    <div class="course-provider">${course.provider}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Professional courses
+            if (item.professionalCourses) {
+                courseSections += `
+                    <div class="courses-section">
+                        <div class="section-header">
+                            <i class="fas fa-laptop-code"></i>
+                            <span>Professional Development Courses</span>
+                        </div>
+                        <div class="courses-grid">
+                            ${item.professionalCourses.map(course => `
+                                <div class="course-card">
+                                    <div class="course-title">${course.name}</div>
+                                    <div class="course-provider">${course.provider}</div>
+                                    ${course.date ? `<div class="course-date">${course.date}</div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Additional training
+            if (item.additionalTraining) {
+                courseSections += `
+                    <div class="courses-section">
+                        <div class="section-header">
+                            <i class="fas fa-tools"></i>
+                            <span>Additional Training & Workshops</span>
+                        </div>
+                        ${item.additionalTraining.map(training => `
+                            <div class="course-card">
+                                <div class="course-title">${training.name}</div>
+                                <div class="course-provider">${training.provider}</div>
+                                ${training.date ? `<div class="course-date">${training.date}</div>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            // Volunteer work
+            let volunteerSection = '';
+            if (item.volunteerWork) {
+                volunteerSection = `
+                    <div class="volunteer-section">
+                        <div class="section-header">
+                            <i class="fas fa-hands-helping"></i>
+                            <span>Volunteer Work & Leadership</span>
+                        </div>
+                        ${item.volunteerWork.map(volunteer => `
+                            <div class="volunteer-card">
+                                <div class="volunteer-title">${volunteer.title}</div>
+                                <div class="volunteer-description">${volunteer.description}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="education-card">
+                        <div class="education-header">
+                            <div class="institution-logo">
+                                <i class="${item.icon}"></i>
+                            </div>
+                            <div class="education-info">
+                                <div class="institution-name">${item.institution}</div>
+                                <h3 class="degree-title">${item.degree}</h3>
+                                <div class="education-period">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>${item.period}</span>
+                                </div>
+                                <div class="specialization-tag">${item.specialization}</div>
+                            </div>
+                        </div>
+
+                        <div class="education-description">
+                            ${item.description}
+                        </div>
+
+                        ${courseSections}
+                        ${volunteerSection}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Scroll animation functionality
+        function initializeScrollAnimations() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const timelineProgress = document.getElementById('timelineProgress');
+            const timeline = document.getElementById('timeline');
+
+            function updateProgress() {
+                const timelineTop = timeline.offsetTop;
+                const timelineHeight = timeline.offsetHeight;
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+
+                // Calculate progress
+                const start = timelineTop - windowHeight / 2;
+                const end = timelineTop + timelineHeight - windowHeight / 2;
+                const progress = Math.max(0, Math.min(1, (scrollTop - start) / (end - start)));
+
+                timelineProgress.style.height = `${progress * 100}%`;
+            }
+
+            function checkAnimation() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+
+                timelineItems.forEach((item, index) => {
+                    const itemTop = item.offsetTop;
+                    const triggerPoint = scrollTop + windowHeight * 0.8;
+
+                    if (triggerPoint > itemTop && !item.classList.contains('animate')) {
+                        // Stagger animation
+                        setTimeout(() => {
+                            item.classList.add('animate');
+                        }, index * 200);
+                    }
+                });
+
+                updateProgress();
+            }
+
+            // Initial check
+            checkAnimation();
+
+            // Listen for scroll events
+            window.addEventListener('scroll', checkAnimation);
+            window.addEventListener('resize', checkAnimation);
+        }
+
+        // Function to add a new course (for future use)
+        window.addNewCourse = function(institutionId, courseData) {
+            const institution = educationData.find(item => item.id === institutionId);
+            if (institution && institution.professionalCourses) {
+                institution.professionalCourses.unshift(courseData);
+                // Refresh timeline
+                document.getElementById('timeline').innerHTML = '<div class="timeline-line"></div><div class="timeline-progress" id="timelineProgress"></div>';
+                createEducationTimeline();
+                initializeScrollAnimations();
+            }
+        };
+
+        // Example usage for adding new courses:
+        // addNewCourse('masters', {
+        //     name: 'New Course Name',
+        //     provider: 'Course Provider',
+        //     date: '2024',
+        //     type: 'online'
+        // });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            createEducationTimeline();
+            initializeScrollAnimations();
+        });
+    </script>
 </body>
 </html>
