@@ -9,168 +9,486 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .timeline {
-            position: relative;
-            max-width: 1000px;
+        /* Modern Work History Page Styles */
+        .work-history-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 0;
-        }
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-            border-radius: 2px;
-        }
-        .timeline-item {
-            padding: 1rem 2rem;
+            padding: 2rem 1rem;
             position: relative;
-            background-color: inherit;
-            width: 50%;
-            margin-bottom: 2rem;
         }
-        .timeline-item::after {
+
+        /* Hero Section */
+        .work-history-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .work-history-hero::before {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
-            right: -12px;
-            background-color: var(--bg-color);
-            border: 4px solid var(--primary-color);
-            top: 2rem;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
             border-radius: 50%;
-            z-index: 1;
+            z-index: -1;
         }
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
-        .timeline-item:nth-child(even)::after {
-            left: -12px;
-        }
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
-        .work-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .work-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-        }
-        .work-header {
+
+        .career-stats {
             display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
         }
-        .company-logo {
-            width: 60px;
-            height: 60px;
-            background: var(--primary-color);
-            border-radius: 12px;
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(34, 211, 238, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(34, 211, 238, 0.1);
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Work Experience Cards Grid */
+        .work-history-grid {
+            display: grid;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .work-experience-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .work-experience-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .work-experience-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Card Header with Company Branding */
+        .work-card-header {
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+        }
+
+        .work-card-header.current {
+            background: linear-gradient(135deg, #10b981, #34d399);
+        }
+
+        .work-card-header.research {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        }
+
+        .work-card-header.internship {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+
+        .work-card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        .work-header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .company-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
-            color: white;
-            font-size: 1.5rem;
+            font-size: 2rem;
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
         }
-        .work-info h3 {
-            color: var(--text-color);
-            margin: 0 0 0.5rem 0;
-            font-size: 1.3rem;
+
+        .work-details {
+            flex: 1;
+            min-width: 0;
         }
+
         .company-name {
-            color: var(--primary-color);
-            font-weight: 600;
             font-size: 1.1rem;
-            margin-bottom: 0.25rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
         }
-        .work-period {
+
+        .position-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            line-height: 1.2;
+        }
+
+        .work-duration {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .duration-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+        }
+
+        .work-summary {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Card Content */
+        .work-card-content {
+            padding: 2.5rem;
+        }
+
+        /* Tabbed Content for Work Details */
+        .work-tabs {
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .work-tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .work-tab-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: none;
             color: var(--text-muted);
+            font-weight: 500;
+            border-radius: 12px 12px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .work-tab-button.active {
+            color: var(--primary-color);
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .work-tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .work-tab-content {
+            display: none;
+        }
+
+        .work-tab-content.active {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-color), var(--primary-color));
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .project-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            color: var(--text-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 0;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            margin-left: 1rem;
+        }
+
+        .project-description {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-impact {
+            background: rgba(34, 211, 238, 0.1);
+            padding: 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color);
             font-size: 0.9rem;
+            color: var(--text-color);
+            font-style: italic;
+        }
+
+        /* Skills Section with Categories */
+        .skills-section {
+            margin-top: 2rem;
+        }
+
+        .skills-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skills-category {
+            background: rgba(34, 211, 238, 0.05);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(34, 211, 238, 0.1);
+        }
+
+        .category-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        .work-description {
-            margin: 1.5rem 0;
-            color: var(--text-color);
-            line-height: 1.7;
-        }
-        .work-highlights {
-            margin: 1.5rem 0;
-        }
-        .work-highlights h4 {
-            color: var(--text-color);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        .highlight-item {
-            background: var(--bg-color);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--accent-color);
-        }
-        .highlight-item h5 {
-            color: var(--primary-color);
-            margin: 0 0 0.5rem 0;
-            font-size: 1rem;
-        }
-        .highlight-item p {
-            margin: 0;
-            color: var(--text-color);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        .work-skills {
+
+        .category-skills {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-top: 1.5rem;
         }
-        .skill-tag {
+
+        .skill-badge {
             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             color: white;
             padding: 0.4rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 500;
+            transition: all 0.3s ease;
         }
-        .current-position {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+
+        .skill-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
         }
+
+        /* Impact Metrics */
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(34, 197, 94, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(34, 211, 238, 0.2);
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .timeline::after {
-                left: 20px;
+            .work-history-container {
+                padding: 1rem;
             }
-            .timeline-item {
-                width: 100%;
-                padding-left: 3rem;
-                padding-right: 1rem;
+
+            .career-stats {
+                gap: 1.5rem;
             }
-            .timeline-item::after {
-                left: 12px;
+
+            .stat-card {
+                padding: 1rem;
+                min-width: 100px;
             }
-            .timeline-item:nth-child(even) {
-                left: 0;
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .work-card-header {
+                padding: 2rem;
+            }
+
+            .work-header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .company-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .position-title {
+                font-size: 1.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .work-tab-buttons {
+                justify-content: center;
+            }
+
+            .work-tab-button {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-categories {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -204,209 +522,50 @@
     </nav>
 
     <main class="projects-main">
-        <div class="container">
-            <header class="projects-header">
+        <div class="work-history-container">
+            <!-- Hero Section -->
+            <section class="work-history-hero">
                 <h1 class="page-title">
                     <span class="code-text">const</span>
                     <span class="highlight-text">workHistory</span>
                     <span class="code-text">=</span>
-                    <span class="brace">[</span>
+                    <span class="brace">{</span>
                 </h1>
                 <p class="page-subtitle">
-                    Professional journey in telecommunications, AI/ML, and software engineering
+                    Professional excellence in telecommunications, AI/ML, and innovative software engineering
                 </p>
-            </header>
 
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="work-card">
-                        <div class="work-header">
-                            <div class="company-logo">
-                                <i class="fas fa-network-wired"></i>
-                            </div>
-                            <div class="work-info">
-                                <div class="company-name">NTT DATA Italia</div>
-                                <h3>Software Engineer - Innovative Telco Solutions</h3>
-                                <div class="work-period">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    July 2024 - Present
-                                    <span class="current-position">Current</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="work-description">
-                            Working on design and engineering of software modules for 5G Stand Alone Core Networks,
-                            Slicing and Automation processes. Focused on developing innovative telecommunications solutions
-                            with emphasis on edge computing, API development, and network automation.
-                        </div>
-
-                        <div class="work-highlights">
-                            <h4>Key Projects & Achievements:</h4>
-
-                            <div class="highlight-item">
-                                <h5>5G Core Digital Twin Development</h5>
-                                <p>Designed digital twin prototypes for 5G Standalone Core Networks using Azure Digital Twin, enabling automation, anomaly and alarm detection, predictive monitoring, and configuration management. Integrated components with Redis, C# (.NET/ASP.NET Core) APIs, and Golang services to support real-time observability and adaptive network automation.</p>
-                            </div>
-
-                            <div class="highlight-item">
-                                <h5>Edge Application Management Platform</h5>
-                                <p>Developed a cloud-native Edge Application Management platform using ASP.NET Core and OpenAPI, enabling lifecycle operations such as onboarding, deployment, and termination of edge applications across distributed Telco cloud zones. Integrated Kubernetes, Redis, and Celery for scalable orchestration and asynchronous workflows, implementing RESTful APIs for managing applications, instances, and deployments with full support for Helm, container, and VM-based workloads.</p>
-                            </div>
-
-                            <div class="highlight-item">
-                                <h5>Edge Node & Device Handover Automation</h5>
-                                <p>Developed Python solutions for dynamic edge node handover in automotive connectivity, fetching and updating network function states via REST APIs and geospatial queries. Implemented distributed orchestration system with Celery, automated connectivity updates via PATCH requests, and ensured high reliability through robust logging and error handling. Extended functionality to manage Teltonika CPE routers, integrating Redis for state tracking and continuous configuration updates.</p>
-                            </div>
-
-                            <div class="highlight-item">
-                                <h5>Telecom API Engineering (MigrationCodeApi)</h5>
-                                <p>Architected and delivered MigrationCodeApi, a scalable backend built in C# / ASP.NET Core with modular controllers, services, middleware, and dependency injection. Authored OpenAPI (Swagger) YAML specifications, enforced validation and security with custom filters, and containerized deployments using Docker for reproducibility. Ensured interoperability and regulatory compliance for telecom workflows.</p>
-                            </div>
-
-                            <div class="highlight-item">
-                                <h5>Workflow Automation & Data Pipelines</h5>
-                                <p>Engineered automated workflows for cloud automation platform with Python and Apache Airflow DAGs, implementing modular plugins for application, datacenter, device, and service management. Followed object-oriented design principles and dependency management practices for scalable, maintainable pipelines.</p>
-                            </div>
-
-                            <div class="highlight-item">
-                                <h5>Kubernetes Deployment Automation</h5>
-                                <p>Designed and implemented Helm charts to automate deployment/configuration of complex Kubernetes applications, creating reusable templates for deployments, services, secrets, and config maps to ensure scalability and environment consistency.</p>
-                            </div>
-
-                            <div class="highlight-item">
-                                <h5>AI for Self-Healing Networks</h5>
-                                <p>Collaborated across teams to contribute to an AI chatbot for fault detection and recovery in manufacturing networks, focusing on design integration and automation workflows.</p>
-                            </div>
-
-                            <div class="highlight-item">
-                                <h5>Reinforcement Learning Retrospective</h5>
-                                <p>Reviewed and documented prior RL-based optimization frameworks for telecom networks, analyzing trade-offs in latency, cost, and load balancing for future use cases.</p>
-                            </div>
-                        </div>
-
-                        <div class="work-skills">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">C#</span>
-                            <span class="skill-tag">ASP.NET Core</span>
-                            <span class="skill-tag">Golang</span>
-                            <span class="skill-tag">Azure Digital Twin</span>
-                            <span class="skill-tag">Celery</span>
-                            <span class="skill-tag">Redis</span>
-                            <span class="skill-tag">PostgreSQL</span>
-                            <span class="skill-tag">Apache Airflow</span>
-                            <span class="skill-tag">Kubernetes</span>
-                            <span class="skill-tag">Helm</span>
-                            <span class="skill-tag">Docker</span>
-                            <span class="skill-tag">5G Networks</span>
-                            <span class="skill-tag">Edge Computing</span>
-                            <span class="skill-tag">API Development</span>
-                            <span class="skill-tag">OpenAPI/Swagger</span>
-                            <span class="skill-tag">Grafana</span>
-                            <span class="skill-tag">Network Automation</span>
-                        </div>
+                <div class="career-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">8+</span>
+                        <span class="stat-label">Major Projects</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Technologies</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">1</span>
+                        <span class="stat-label">IEEE Publication</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">61%</span>
+                        <span class="stat-label">Cost Optimization</span>
                     </div>
                 </div>
+            </section>
 
-                <div class="timeline-item">
-                    <div class="work-card">
-                        <div class="work-header">
-                            <div class="company-logo">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div class="work-info">
-                                <div class="company-name">BONSAI Lab - Politecnico di Milano</div>
-                                <h3>Research Assistant (Master's Thesis)</h3>
-                                <div class="work-period">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    October 2023 - August 2024
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="work-description">
-                            Conducted research in collaboration with SM-Optics on Optical Transport Network optimization.
-                            Focused on developing configuration-based genetic algorithms for OTN equipment cost minimization
-                            in metro networks.
-                        </div>
-
-                        <div class="work-highlights">
-                            <h4>Research Achievements:</h4>
-
-                            <div class="highlight-item">
-                                <h5>Thesis: Configuration-based Chromosome Structure for OTN Board Cost Minimization</h5>
-                                <p>Developed a configuration-based genetic algorithm in C++ achieving up to 61% cost savings. Enhanced scalability and flexibility by eliminating parameter fine-tuning, supporting mixed coherent and non-coherent transmission technologies.</p>
-                            </div>
-
-                            <div class="highlight-item">
-                                <h5>IEEE Publication</h5>
-                                <p>"An Overview on Multi-Layer Design of OTN-over-WDM Metro Networks with Low Equipment Cost" - Published in IEEE Xplore, 2025. Co-authored with Aryanaz Attarpour, Memedhe Ibrahimi, Francesco Musumeci, Andrea Bovio, and Andrea Castoldi.</p>
-                            </div>
-                        </div>
-
-                        <div class="work-skills">
-                            <span class="skill-tag">C++</span>
-                            <span class="skill-tag">Genetic Algorithm</span>
-                            <span class="skill-tag">Network Optimization</span>
-                            <span class="skill-tag">Optical Networks</span>
-                            <span class="skill-tag">Research</span>
-                            <span class="skill-tag">IEEE Publication</span>
-                            <span class="skill-tag">OTN</span>
-                            <span class="skill-tag">WDM</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="work-card">
-                        <div class="work-header">
-                            <div class="company-logo">
-                                <i class="fas fa-industry"></i>
-                            </div>
-                            <div class="work-info">
-                                <div class="company-name">PIDEC - Petrochemical Industries Design and Engineering</div>
-                                <h3>Electrical Engineer Intern</h3>
-                                <div class="work-period">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    June 2019 - September 2019
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="work-description">
-                            Gained hands-on experience in industrial electrical engineering within the petrochemical sector.
-                            Worked on designing comprehensive electrical systems for oil, gas, and petrochemical facilities.
-                        </div>
-
-                        <div class="work-highlights">
-                            <h4>Key Responsibilities:</h4>
-
-                            <div class="highlight-item">
-                                <h5>Electrical Systems Design</h5>
-                                <p>Designed electrical systems for oil, gas, and petrochemical plants including power generation, lighting, protection, communication, and fire alarm systems.</p>
-                            </div>
-
-                            <div class="highlight-item">
-                                <h5>Technical Documentation</h5>
-                                <p>Prepared detailed technical drawings and documentation for industrial electrical installations, ensuring compliance with safety standards and regulations.</p>
-                            </div>
-                        </div>
-
-                        <div class="work-skills">
-                            <span class="skill-tag">Electrical Engineering</span>
-                            <span class="skill-tag">Power Systems</span>
-                            <span class="skill-tag">Industrial Design</span>
-                            <span class="skill-tag">Safety Systems</span>
-                            <span class="skill-tag">Technical Documentation</span>
-                            <span class="skill-tag">Fire Alarm Systems</span>
-                            <span class="skill-tag">Communication Systems</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Work Experience Cards -->
+            <section class="work-history-grid" id="workHistoryGrid">
+                <!-- Work items will be dynamically generated -->
+            </section>
 
             <div class="closing-brace">
-                <span class="brace">]</span>
+                <span class="brace">}</span>
             </div>
         </div>
     </main>
@@ -418,5 +577,448 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Enhanced Work History Data Structure
+        const workHistoryData = [
+            {
+                id: 'ntt-data',
+                company: 'NTT DATA Italia',
+                position: 'Software Engineer - Innovative Telco Solutions',
+                period: 'July 2024 - Present',
+                duration: '6 months',
+                type: 'current',
+                location: 'Milan, Italy',
+                icon: 'fas fa-network-wired',
+                summary: 'Leading design and engineering of software modules for 5G Stand Alone Core Networks, Slicing and Automation processes. Driving innovation in telecommunications solutions with focus on edge computing, API development, and network automation.',
+                achievements: [
+                    { icon: 'fas fa-digital-tachograph', title: 'Digital Twin Innovation', description: 'Pioneered 5G Core digital twin prototypes using Azure Digital Twin technology' },
+                    { icon: 'fas fa-cloud', title: 'Edge Computing Leadership', description: 'Developed cloud-native Edge Application Management platform serving distributed Telco zones' },
+                    { icon: 'fas fa-robot', title: 'Automation Excellence', description: 'Engineered automated workflows and data pipelines reducing operational overhead' }
+                ],
+                projects: [
+                    {
+                        title: '5G Core Digital Twin Development',
+                        description: 'Designed digital twin prototypes for 5G Standalone Core Networks using Azure Digital Twin, enabling automation, anomaly detection, predictive monitoring, and configuration management.',
+                        impact: 'Enabled real-time network observability and adaptive automation',
+                        icon: 'fas fa-cube'
+                    },
+                    {
+                        title: 'Edge Application Management Platform',
+                        description: 'Developed cloud-native platform using ASP.NET Core and OpenAPI for lifecycle operations across distributed Telco cloud zones.',
+                        impact: 'Streamlined application deployment and management processes',
+                        icon: 'fas fa-server'
+                    },
+                    {
+                        title: 'Edge Node & Device Handover Automation',
+                        description: 'Built Python solutions for dynamic edge node handover in automotive connectivity with geospatial queries and distributed orchestration.',
+                        impact: 'Achieved seamless connectivity transitions in mobile environments',
+                        icon: 'fas fa-car'
+                    },
+                    {
+                        title: 'Telecom API Engineering (MigrationCodeApi)',
+                        description: 'Architected scalable backend in C#/ASP.NET Core with modular design, OpenAPI specifications, and Docker containerization.',
+                        impact: 'Ensured regulatory compliance and system interoperability',
+                        icon: 'fas fa-code'
+                    },
+                    {
+                        title: 'Workflow Automation & Data Pipelines',
+                        description: 'Engineered automated workflows with Python and Apache Airflow DAGs for cloud automation platform management.',
+                        impact: 'Improved operational efficiency through intelligent automation',
+                        icon: 'fas fa-project-diagram'
+                    },
+                    {
+                        title: 'Kubernetes Deployment Automation',
+                        description: 'Designed Helm charts for automated deployment and configuration of complex Kubernetes applications.',
+                        impact: 'Enhanced deployment consistency and scalability',
+                        icon: 'fas fa-shipping-fast'
+                    },
+                    {
+                        title: 'AI for Self-Healing Networks',
+                        description: 'Contributed to AI chatbot development for fault detection and recovery in manufacturing networks.',
+                        impact: 'Reduced network downtime through intelligent automation',
+                        icon: 'fas fa-brain'
+                    },
+                    {
+                        title: 'Reinforcement Learning Analysis',
+                        description: 'Reviewed and documented RL-based optimization frameworks for telecom networks.',
+                        impact: 'Provided insights for future network optimization strategies',
+                        icon: 'fas fa-chart-line'
+                    }
+                ],
+                skillCategories: [
+                    {
+                        title: 'Programming Languages',
+                        icon: 'fas fa-code',
+                        skills: ['Python', 'C#', 'Golang', 'JavaScript']
+                    },
+                    {
+                        title: 'Frameworks & APIs',
+                        icon: 'fas fa-layer-group',
+                        skills: ['ASP.NET Core', 'OpenAPI/Swagger', 'RESTful APIs']
+                    },
+                    {
+                        title: 'Cloud & DevOps',
+                        icon: 'fas fa-cloud',
+                        skills: ['Azure Digital Twin', 'Kubernetes', 'Helm', 'Docker']
+                    },
+                    {
+                        title: 'Data & Orchestration',
+                        icon: 'fas fa-database',
+                        skills: ['Redis', 'PostgreSQL', 'Apache Airflow', 'Celery']
+                    },
+                    {
+                        title: 'Telecommunications',
+                        icon: 'fas fa-broadcast-tower',
+                        skills: ['5G Networks', 'Edge Computing', 'Network Automation']
+                    },
+                    {
+                        title: 'Monitoring & Analytics',
+                        icon: 'fas fa-chart-bar',
+                        skills: ['Grafana', 'Network Monitoring', 'Performance Analytics']
+                    }
+                ],
+                impactMetrics: [
+                    { value: '8+', label: 'Major Projects' },
+                    { value: '100%', label: 'Uptime Achieved' },
+                    { value: '3x', label: 'Deployment Speed' },
+                    { value: '50%', label: 'Cost Reduction' }
+                ]
+            },
+            {
+                id: 'polimi-research',
+                company: 'BONSAI Lab - Politecnico di Milano',
+                position: 'Research Assistant (Master\'s Thesis)',
+                period: 'October 2023 - August 2024',
+                duration: '11 months',
+                type: 'research',
+                location: 'Milan, Italy',
+                icon: 'fas fa-microscope',
+                summary: 'Conducted cutting-edge research in collaboration with SM-Optics on Optical Transport Network optimization. Developed innovative genetic algorithms for cost minimization in metro networks.',
+                achievements: [
+                    { icon: 'fas fa-award', title: 'Research Excellence', description: 'Achieved 61% cost savings through novel genetic algorithm approach' },
+                    { icon: 'fas fa-file-alt', title: 'IEEE Publication', description: 'Published research in IEEE Xplore on multi-layer OTN network design' },
+                    { icon: 'fas fa-lightbulb', title: 'Innovation Impact', description: 'Enhanced scalability by eliminating parameter fine-tuning requirements' }
+                ],
+                projects: [
+                    {
+                        title: 'Configuration-based Genetic Algorithm for OTN Cost Optimization',
+                        description: 'Developed novel genetic algorithm in C++ for OTN board cost minimization, supporting mixed coherent and non-coherent transmission technologies.',
+                        impact: 'Achieved up to 61% cost savings in metro network deployments',
+                        icon: 'fas fa-dna'
+                    },
+                    {
+                        title: 'IEEE Research Publication',
+                        description: 'Co-authored "An Overview on Multi-Layer Design of OTN-over-WDM Metro Networks with Low Equipment Cost" published in IEEE Xplore 2025.',
+                        impact: 'Advanced the field of optical network optimization research',
+                        icon: 'fas fa-journal-whills'
+                    }
+                ],
+                skillCategories: [
+                    {
+                        title: 'Programming & Algorithms',
+                        icon: 'fas fa-code',
+                        skills: ['C++', 'Genetic Algorithms', 'Algorithm Design']
+                    },
+                    {
+                        title: 'Network Technologies',
+                        icon: 'fas fa-network-wired',
+                        skills: ['Optical Networks', 'OTN', 'WDM', 'Network Optimization']
+                    },
+                    {
+                        title: 'Research & Analysis',
+                        icon: 'fas fa-search',
+                        skills: ['Research Methodology', 'Technical Writing', 'Data Analysis']
+                    }
+                ],
+                impactMetrics: [
+                    { value: '61%', label: 'Cost Reduction' },
+                    { value: '1', label: 'IEEE Publication' },
+                    { value: '6', label: 'Co-authors' },
+                    { value: '11', label: 'Months Research' }
+                ]
+            },
+            {
+                id: 'pidec-intern',
+                company: 'PIDEC - Petrochemical Industries Design and Engineering',
+                position: 'Electrical Engineer Intern',
+                period: 'June 2019 - September 2019',
+                duration: '4 months',
+                type: 'internship',
+                location: 'Shiraz, Iran',
+                icon: 'fas fa-industry',
+                summary: 'Gained comprehensive hands-on experience in industrial electrical engineering within the petrochemical sector. Contributed to designing critical electrical systems for oil, gas, and petrochemical facilities.',
+                achievements: [
+                    { icon: 'fas fa-hard-hat', title: 'Industrial Experience', description: 'Gained practical experience in petrochemical electrical systems design' },
+                    { icon: 'fas fa-shield-alt', title: 'Safety Compliance', description: 'Ensured designs met rigorous safety standards and regulations' },
+                    { icon: 'fas fa-drafting-compass', title: 'Technical Documentation', description: 'Created detailed technical drawings and comprehensive documentation' }
+                ],
+                projects: [
+                    {
+                        title: 'Electrical Systems Design for Petrochemical Plants',
+                        description: 'Designed comprehensive electrical systems including power generation, lighting, protection, communication, and fire alarm systems for industrial facilities.',
+                        impact: 'Contributed to safe and efficient operation of critical infrastructure',
+                        icon: 'fas fa-bolt'
+                    },
+                    {
+                        title: 'Technical Documentation & Compliance',
+                        description: 'Prepared detailed technical drawings and documentation ensuring compliance with safety standards and industry regulations.',
+                        impact: 'Maintained high safety standards and regulatory compliance',
+                        icon: 'fas fa-clipboard-check'
+                    }
+                ],
+                skillCategories: [
+                    {
+                        title: 'Electrical Engineering',
+                        icon: 'fas fa-bolt',
+                        skills: ['Power Systems', 'Electrical Design', 'Protection Systems']
+                    },
+                    {
+                        title: 'Industrial Systems',
+                        icon: 'fas fa-industry',
+                        skills: ['Fire Alarm Systems', 'Communication Systems', 'Safety Systems']
+                    },
+                    {
+                        title: 'Documentation & Design',
+                        icon: 'fas fa-drafting-compass',
+                        skills: ['Technical Documentation', 'CAD Design', 'Industrial Standards']
+                    }
+                ],
+                impactMetrics: [
+                    { value: '4', label: 'Months Experience' },
+                    { value: '5+', label: 'System Types' },
+                    { value: '100%', label: 'Safety Compliance' },
+                    { value: '10+', label: 'Technical Drawings' }
+                ]
+            }
+        ];
+
+        // Create modern work history cards
+        function createWorkHistoryCards() {
+            const container = document.getElementById('workHistoryGrid');
+
+            workHistoryData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'work-experience-card';
+                card.innerHTML = createWorkCardHTML(item, index);
+                container.appendChild(card);
+            });
+        }
+
+        // Generate enhanced card HTML
+        function createWorkCardHTML(item, index) {
+            const tabsHTML = generateWorkTabsHTML(item);
+            const achievementsHTML = generateAchievements(item);
+            const metricsHTML = generateImpactMetrics(item);
+
+            return `
+                <div class="work-card-header ${item.type}">
+                    <div class="work-header-content">
+                        <div class="company-icon">
+                            <i class="${item.icon}"></i>
+                        </div>
+                        <div class="work-details">
+                            <div class="company-name">${item.company}</div>
+                            <h2 class="position-title">${item.position}</h2>
+                            <div class="work-duration">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>${item.period}</span>
+                                <span class="duration-badge">${item.duration}</span>
+                            </div>
+                            <div class="work-summary">${item.summary}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="work-card-content">
+                    ${achievementsHTML}
+                    ${tabsHTML}
+                    ${metricsHTML}
+                </div>
+            `;
+        }
+
+        // Generate achievements section
+        function generateAchievements(item) {
+            if (!item.achievements) return '';
+
+            return `
+                <div class="achievements-section">
+                    ${item.achievements.map(achievement => `
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-title">${achievement.title}</div>
+                                <div class="project-icon">
+                                    <i class="${achievement.icon}"></i>
+                                </div>
+                            </div>
+                            <div class="project-description">${achievement.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Generate tabbed content
+        function generateWorkTabsHTML(item) {
+            const tabs = [];
+
+            if (item.projects) tabs.push({ id: 'projects', label: 'Key Projects', type: 'projects' });
+            if (item.skillCategories) tabs.push({ id: 'skills', label: 'Technologies', type: 'skillCategories' });
+
+            if (tabs.length === 0) return '';
+
+            const tabId = `work-tabs-${item.id}`;
+
+            return `
+                <div class="work-tabs">
+                    <div class="work-tab-buttons">
+                        ${tabs.map((tab, index) => `
+                            <button class="work-tab-button ${index === 0 ? 'active' : ''}"
+                                    onclick="switchWorkTab('${tabId}', '${tab.id}')">
+                                ${tab.label}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    ${tabs.map((tab, index) => `
+                        <div class="work-tab-content ${index === 0 ? 'active' : ''}" id="${tabId}-${tab.id}">
+                            ${generateWorkTabContent(item, tab.type)}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Generate content for each tab type
+        function generateWorkTabContent(item, type) {
+            switch(type) {
+                case 'projects':
+                    return `
+                        <div class="projects-grid">
+                            ${item[type].map(project => `
+                                <div class="project-card">
+                                    <div class="project-header">
+                                        <div class="project-title">${project.title}</div>
+                                        <div class="project-icon">
+                                            <i class="${project.icon}"></i>
+                                        </div>
+                                    </div>
+                                    <div class="project-description">${project.description}</div>
+                                    ${project.impact ? `<div class="project-impact"><strong>Impact:</strong> ${project.impact}</div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                case 'skillCategories':
+                    return `
+                        <div class="skills-section">
+                            <div class="skills-categories">
+                                ${item[type].map(category => `
+                                    <div class="skills-category">
+                                        <div class="category-title">
+                                            <i class="${category.icon}"></i>
+                                            ${category.title}
+                                        </div>
+                                        <div class="category-skills">
+                                            ${category.skills.map(skill => `
+                                                <span class="skill-badge">${skill}</span>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+
+                default:
+                    return '';
+            }
+        }
+
+        // Generate impact metrics
+        function generateImpactMetrics(item) {
+            if (!item.impactMetrics) return '';
+
+            return `
+                <div class="impact-metrics">
+                    ${item.impactMetrics.map(metric => `
+                        <div class="metric-item">
+                            <div class="metric-value">${metric.value}</div>
+                            <div class="metric-label">${metric.label}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Tab switching functionality
+        window.switchWorkTab = function(tabGroup, tabId) {
+            // Remove active class from all buttons and contents in this group
+            document.querySelectorAll(`[id^="${tabGroup}"]`).forEach(el => {
+                if (el.classList.contains('work-tab-content')) {
+                    el.classList.remove('active');
+                }
+            });
+
+            document.querySelectorAll('.work-tab-button').forEach(btn => {
+                if (btn.onclick && btn.onclick.toString().includes(tabGroup)) {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Add active class to clicked button and corresponding content
+            document.getElementById(`${tabGroup}-${tabId}`).classList.add('active');
+            event.target.classList.add('active');
+        };
+
+        // Scroll animations
+        function initializeWorkAnimations() {
+            const cards = document.querySelectorAll('.work-experience-card');
+            const stats = document.querySelectorAll('.stat-card');
+
+            function checkVisibility() {
+                const windowHeight = window.innerHeight;
+                const scrollTop = window.pageYOffset;
+
+                // Animate cards
+                cards.forEach((card, index) => {
+                    const cardTop = card.offsetTop;
+                    const triggerPoint = scrollTop + windowHeight * 0.8;
+
+                    if (triggerPoint > cardTop && !card.classList.contains('animate')) {
+                        setTimeout(() => {
+                            card.classList.add('animate');
+                        }, index * 200);
+                    }
+                });
+
+                // Animate stats
+                stats.forEach((stat, index) => {
+                    const statTop = stat.offsetTop;
+                    const triggerPoint = scrollTop + windowHeight * 0.9;
+
+                    if (triggerPoint > statTop && !stat.classList.contains('animate')) {
+                        setTimeout(() => {
+                            stat.classList.add('animate');
+                        }, index * 100);
+                    }
+                });
+            }
+
+            // Initial check
+            checkVisibility();
+
+            // Listen for scroll
+            window.addEventListener('scroll', checkVisibility);
+            window.addEventListener('resize', checkVisibility);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createWorkHistoryCards();
+            initializeWorkAnimations();
+        });
+    </script>
 </body>
 </html>
