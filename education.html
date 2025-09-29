@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education - Bita Rahmat Zadeh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="projects.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .education-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        .education-timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+        .education-item {
+            padding: 1rem 2rem;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            margin-bottom: 2rem;
+        }
+        .education-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -12px;
+            background-color: var(--bg-color);
+            border: 4px solid var(--primary-color);
+            top: 2rem;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .education-item:nth-child(even) {
+            left: 50%;
+        }
+        .education-item:nth-child(even)::after {
+            left: -12px;
+        }
+        .education-item:nth-child(odd) {
+            left: 0;
+        }
+        .education-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+        .education-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .university-logo {
+            width: 70px;
+            height: 70px;
+            background: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+        }
+        .education-info h3 {
+            color: var(--text-color);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.4rem;
+        }
+        .university-name {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .education-period {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .education-description {
+            margin: 1.5rem 0;
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        .courses-section {
+            margin-top: 2rem;
+        }
+        .courses-section h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .course-item {
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+        .course-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .course-item h5 {
+            color: var(--primary-color);
+            margin: 0 0 0.5rem 0;
+            font-size: 0.95rem;
+        }
+        .course-provider {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+        .volunteer-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .volunteer-section h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .volunteer-item {
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        .volunteer-item p {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .specialization {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .education-timeline::after {
+                left: 20px;
+            }
+            .education-item {
+                width: 100%;
+                padding-left: 3rem;
+                padding-right: 1rem;
+            }
+            .education-item::after {
+                left: 12px;
+            }
+            .education-item:nth-child(even) {
+                left: 0;
+            }
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <span class="code-bracket">&lt;</span>
+                    <span class="nav-name">BitaRZ</span>
+                    <span class="code-bracket">/&gt;</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="work-projects.html">Work Projects</a></li>
+                <li><a href="projects.html">Side Projects</a></li>
+                <li><a href="work-history.html">Work History</a></li>
+                <li><a href="education.html" class="active">Education</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="projects-main">
+        <div class="container">
+            <header class="projects-header">
+                <h1 class="page-title">
+                    <span class="code-text">const</span>
+                    <span class="highlight-text">education</span>
+                    <span class="code-text">=</span>
+                    <span class="brace">[</span>
+                </h1>
+                <p class="page-subtitle">
+                    Academic journey through telecommunications engineering, AI applications, and continuous learning
+                </p>
+            </header>
+
+            <div class="education-timeline">
+                <div class="education-item">
+                    <div class="education-card">
+                        <div class="education-header">
+                            <div class="university-logo">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="education-info">
+                                <div class="university-name">Politecnico di Milano</div>
+                                <h3>Master of Science in Telecommunication Engineering</h3>
+                                <div class="education-period">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    February 2021 - September 2024
+                                </div>
+                                <div class="specialization">Wireless Networks & AI Applications in Telecom</div>
+                            </div>
+                        </div>
+
+                        <div class="education-description">
+                            Specialized in wireless networks, AI applications in telecommunications, and optical transport networks.
+                            Focused on advanced signal processing, communication network design, and machine learning applications
+                            for next-generation wireless systems.
+                        </div>
+
+                        <div class="courses-section">
+                            <h4><i class="fas fa-book"></i> Key University Courses</h4>
+                            <div class="courses-grid">
+                                <div class="course-item">
+                                    <h5>Advanced Digital Signal Processing</h5>
+                                    <div class="course-provider">Politecnico di Milano</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Communication Network Design</h5>
+                                    <div class="course-provider">Politecnico di Milano</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Mobile Radio Network</h5>
+                                    <div class="course-provider">Politecnico di Milano</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Information Theory</h5>
+                                    <div class="course-provider">Politecnico di Milano</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Artificial Neural Networks and Deep Learning</h5>
+                                    <div class="course-provider">Politecnico di Milano</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Internet of Things</h5>
+                                    <div class="course-provider">Politecnico di Milano</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Image Analysis and Computer Vision</h5>
+                                    <div class="course-provider">Politecnico di Milano</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Wireless Internet</h5>
+                                    <div class="course-provider">Politecnico di Milano</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="courses-section">
+                            <h4><i class="fas fa-laptop-code"></i> Additional Professional Courses</h4>
+                            <div class="courses-grid">
+                                <div class="course-item">
+                                    <h5>Reinforcement Learning</h5>
+                                    <div class="course-provider">Hugging Face</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Machine Learning</h5>
+                                    <div class="course-provider">Google Developers</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Machine Learning Specialization</h5>
+                                    <div class="course-provider">Prof. Andrew Ng, Coursera</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Advanced OpenCV with Python</h5>
+                                    <div class="course-provider">Pysourse</div>
+                                </div>
+                                <div class="course-item">
+                                    <h5>Advanced Python Programming</h5>
+                                    <div class="course-provider">Faradars</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="education-card">
+                        <div class="education-header">
+                            <div class="university-logo">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="education-info">
+                                <div class="university-name">Shiraz University</div>
+                                <h3>Bachelor of Science in Electrical Engineering</h3>
+                                <div class="education-period">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    September 2015 - July 2020
+                                </div>
+                                <div class="specialization">Focus on Communications</div>
+                            </div>
+                        </div>
+
+                        <div class="education-description">
+                            Built a solid foundation in signal processing, communication theory, and electronic systems.
+                            Focused on communications engineering with emphasis on digital signal processing,
+                            network analysis, and system design fundamentals.
+                        </div>
+
+                        <div class="courses-section">
+                            <h4><i class="fas fa-workshop"></i> Additional Training & Workshops</h4>
+                            <div class="course-item">
+                                <h5>Deep Learning Workshop</h5>
+                                <div class="course-provider">IEEE Shiraz University Student Branch</div>
+                            </div>
+                        </div>
+
+                        <div class="volunteer-section">
+                            <h4><i class="fas fa-hands-helping"></i> Volunteer Work & Leadership</h4>
+
+                            <div class="volunteer-item">
+                                <p><strong>Member of IEEE Shiraz University Student Branch</strong> - Actively participated in professional development activities, technical workshops, and student community initiatives.</p>
+                            </div>
+
+                            <div class="volunteer-item">
+                                <p><strong>Campus Charity Initiative</strong> - Supported local charity causes by organizing fundraising activities and coordinating community outreach programs.</p>
+                            </div>
+
+                            <div class="volunteer-item">
+                                <p><strong>Student Orientation Organizer</strong> - Organized informational conferences on Electrical Engineering branches for new students, helping them understand different specialization paths and career opportunities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="closing-brace">
+                <span class="brace">]</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Bita Rahmat Zadeh. Built with ❤️ and lots of ☕</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

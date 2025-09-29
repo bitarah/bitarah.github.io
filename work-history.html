@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work History - Bita Rahmat Zadeh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="projects.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+        .timeline-item {
+            padding: 1rem 2rem;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -12px;
+            background-color: var(--bg-color);
+            border: 4px solid var(--primary-color);
+            top: 2rem;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        .timeline-item:nth-child(even)::after {
+            left: -12px;
+        }
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        .work-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+        .work-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .work-info h3 {
+            color: var(--text-color);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.3rem;
+        }
+        .company-name {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        .work-period {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .work-description {
+            margin: 1.5rem 0;
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        .work-highlights {
+            margin: 1.5rem 0;
+        }
+        .work-highlights h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .highlight-item {
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+        .highlight-item h5 {
+            color: var(--primary-color);
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+        .highlight-item p {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .work-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .skill-tag {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .current-position {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 20px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 3rem;
+                padding-right: 1rem;
+            }
+            .timeline-item::after {
+                left: 12px;
+            }
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <span class="code-bracket">&lt;</span>
+                    <span class="nav-name">BitaRZ</span>
+                    <span class="code-bracket">/&gt;</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="work-projects.html">Work Projects</a></li>
+                <li><a href="projects.html">Side Projects</a></li>
+                <li><a href="work-history.html" class="active">Work History</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="projects-main">
+        <div class="container">
+            <header class="projects-header">
+                <h1 class="page-title">
+                    <span class="code-text">const</span>
+                    <span class="highlight-text">workHistory</span>
+                    <span class="code-text">=</span>
+                    <span class="brace">[</span>
+                </h1>
+                <p class="page-subtitle">
+                    Professional journey in telecommunications, AI/ML, and software engineering
+                </p>
+            </header>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="work-card">
+                        <div class="work-header">
+                            <div class="company-logo">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <div class="work-info">
+                                <div class="company-name">NTT DATA Italia</div>
+                                <h3>Software Engineer - Innovative Telco Solutions</h3>
+                                <div class="work-period">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    July 2024 - Present
+                                    <span class="current-position">Current</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-description">
+                            Working on design and engineering of software modules for 5G Stand Alone Core Networks,
+                            Slicing and Automation processes. Focused on developing innovative telecommunications solutions
+                            with emphasis on edge computing, API development, and network automation.
+                        </div>
+
+                        <div class="work-highlights">
+                            <h4>Key Projects & Achievements:</h4>
+
+                            <div class="highlight-item">
+                                <h5>5G Core Digital Twin Development</h5>
+                                <p>Designed digital twin prototypes for 5G Standalone Core Networks using Azure Digital Twin, enabling automation, anomaly and alarm detection, predictive monitoring, and configuration management. Integrated components with Redis, C# (.NET/ASP.NET Core) APIs, and Golang services to support real-time observability and adaptive network automation.</p>
+                            </div>
+
+                            <div class="highlight-item">
+                                <h5>Edge Application Management Platform</h5>
+                                <p>Developed a cloud-native Edge Application Management platform using ASP.NET Core and OpenAPI, enabling lifecycle operations such as onboarding, deployment, and termination of edge applications across distributed Telco cloud zones. Integrated Kubernetes, Redis, and Celery for scalable orchestration and asynchronous workflows, implementing RESTful APIs for managing applications, instances, and deployments with full support for Helm, container, and VM-based workloads.</p>
+                            </div>
+
+                            <div class="highlight-item">
+                                <h5>Edge Node & Device Handover Automation</h5>
+                                <p>Developed Python solutions for dynamic edge node handover in automotive connectivity, fetching and updating network function states via REST APIs and geospatial queries. Implemented distributed orchestration system with Celery, automated connectivity updates via PATCH requests, and ensured high reliability through robust logging and error handling. Extended functionality to manage Teltonika CPE routers, integrating Redis for state tracking and continuous configuration updates.</p>
+                            </div>
+
+                            <div class="highlight-item">
+                                <h5>Telecom API Engineering (MigrationCodeApi)</h5>
+                                <p>Architected and delivered MigrationCodeApi, a scalable backend built in C# / ASP.NET Core with modular controllers, services, middleware, and dependency injection. Authored OpenAPI (Swagger) YAML specifications, enforced validation and security with custom filters, and containerized deployments using Docker for reproducibility. Ensured interoperability and regulatory compliance for telecom workflows.</p>
+                            </div>
+
+                            <div class="highlight-item">
+                                <h5>Workflow Automation & Data Pipelines</h5>
+                                <p>Engineered automated workflows for cloud automation platform with Python and Apache Airflow DAGs, implementing modular plugins for application, datacenter, device, and service management. Followed object-oriented design principles and dependency management practices for scalable, maintainable pipelines.</p>
+                            </div>
+
+                            <div class="highlight-item">
+                                <h5>Kubernetes Deployment Automation</h5>
+                                <p>Designed and implemented Helm charts to automate deployment/configuration of complex Kubernetes applications, creating reusable templates for deployments, services, secrets, and config maps to ensure scalability and environment consistency.</p>
+                            </div>
+
+                            <div class="highlight-item">
+                                <h5>AI for Self-Healing Networks</h5>
+                                <p>Collaborated across teams to contribute to an AI chatbot for fault detection and recovery in manufacturing networks, focusing on design integration and automation workflows.</p>
+                            </div>
+
+                            <div class="highlight-item">
+                                <h5>Reinforcement Learning Retrospective</h5>
+                                <p>Reviewed and documented prior RL-based optimization frameworks for telecom networks, analyzing trade-offs in latency, cost, and load balancing for future use cases.</p>
+                            </div>
+                        </div>
+
+                        <div class="work-skills">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">C#</span>
+                            <span class="skill-tag">ASP.NET Core</span>
+                            <span class="skill-tag">Golang</span>
+                            <span class="skill-tag">Azure Digital Twin</span>
+                            <span class="skill-tag">Celery</span>
+                            <span class="skill-tag">Redis</span>
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">Apache Airflow</span>
+                            <span class="skill-tag">Kubernetes</span>
+                            <span class="skill-tag">Helm</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">5G Networks</span>
+                            <span class="skill-tag">Edge Computing</span>
+                            <span class="skill-tag">API Development</span>
+                            <span class="skill-tag">OpenAPI/Swagger</span>
+                            <span class="skill-tag">Grafana</span>
+                            <span class="skill-tag">Network Automation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="work-card">
+                        <div class="work-header">
+                            <div class="company-logo">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="work-info">
+                                <div class="company-name">BONSAI Lab - Politecnico di Milano</div>
+                                <h3>Research Assistant (Master's Thesis)</h3>
+                                <div class="work-period">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    October 2023 - August 2024
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-description">
+                            Conducted research in collaboration with SM-Optics on Optical Transport Network optimization.
+                            Focused on developing configuration-based genetic algorithms for OTN equipment cost minimization
+                            in metro networks.
+                        </div>
+
+                        <div class="work-highlights">
+                            <h4>Research Achievements:</h4>
+
+                            <div class="highlight-item">
+                                <h5>Thesis: Configuration-based Chromosome Structure for OTN Board Cost Minimization</h5>
+                                <p>Developed a configuration-based genetic algorithm in C++ achieving up to 61% cost savings. Enhanced scalability and flexibility by eliminating parameter fine-tuning, supporting mixed coherent and non-coherent transmission technologies.</p>
+                            </div>
+
+                            <div class="highlight-item">
+                                <h5>IEEE Publication</h5>
+                                <p>"An Overview on Multi-Layer Design of OTN-over-WDM Metro Networks with Low Equipment Cost" - Published in IEEE Xplore, 2025. Co-authored with Aryanaz Attarpour, Memedhe Ibrahimi, Francesco Musumeci, Andrea Bovio, and Andrea Castoldi.</p>
+                            </div>
+                        </div>
+
+                        <div class="work-skills">
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Genetic Algorithm</span>
+                            <span class="skill-tag">Network Optimization</span>
+                            <span class="skill-tag">Optical Networks</span>
+                            <span class="skill-tag">Research</span>
+                            <span class="skill-tag">IEEE Publication</span>
+                            <span class="skill-tag">OTN</span>
+                            <span class="skill-tag">WDM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="work-card">
+                        <div class="work-header">
+                            <div class="company-logo">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div class="work-info">
+                                <div class="company-name">PIDEC - Petrochemical Industries Design and Engineering</div>
+                                <h3>Electrical Engineer Intern</h3>
+                                <div class="work-period">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    June 2019 - September 2019
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-description">
+                            Gained hands-on experience in industrial electrical engineering within the petrochemical sector.
+                            Worked on designing comprehensive electrical systems for oil, gas, and petrochemical facilities.
+                        </div>
+
+                        <div class="work-highlights">
+                            <h4>Key Responsibilities:</h4>
+
+                            <div class="highlight-item">
+                                <h5>Electrical Systems Design</h5>
+                                <p>Designed electrical systems for oil, gas, and petrochemical plants including power generation, lighting, protection, communication, and fire alarm systems.</p>
+                            </div>
+
+                            <div class="highlight-item">
+                                <h5>Technical Documentation</h5>
+                                <p>Prepared detailed technical drawings and documentation for industrial electrical installations, ensuring compliance with safety standards and regulations.</p>
+                            </div>
+                        </div>
+
+                        <div class="work-skills">
+                            <span class="skill-tag">Electrical Engineering</span>
+                            <span class="skill-tag">Power Systems</span>
+                            <span class="skill-tag">Industrial Design</span>
+                            <span class="skill-tag">Safety Systems</span>
+                            <span class="skill-tag">Technical Documentation</span>
+                            <span class="skill-tag">Fire Alarm Systems</span>
+                            <span class="skill-tag">Communication Systems</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="closing-brace">
+                <span class="brace">]</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Bita Rahmat Zadeh. Built with ❤️ and lots of ☕</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
