@@ -365,7 +365,7 @@ function createProjectCard(repo) {
                         </a>
                     ` : ''}
                     ${repo.hasReport ? `
-                        <a href="https://github.com/${GITHUB_USERNAME}/${repo.name}/blob/main/results/report.html" target="_blank" class="project-link project-link-report">
+                        <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/${GITHUB_USERNAME}/${repo.name}/main/results/report.html" target="_blank" class="project-link project-link-report">
                             <i class="fas fa-chart-bar"></i> View Report
                         </a>
                     ` : ''}
