@@ -360,6 +360,17 @@
     transform: translateY(-2px);
 }
 
+.project-link-report {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+}
+
+.project-link-report:hover {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: rgba(139, 92, 246, 0.5);
+}
+
 .project-badge {
     position: absolute;
     top: 1rem;

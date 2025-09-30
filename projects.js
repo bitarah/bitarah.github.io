@@ -106,18 +106,20 @@ async function enrichRepositoryData(repo) {
 
     try {
         // Use Promise.allSettled to avoid blocking on failed requests
-        const [overviewResult, skillsResult, imagesResult] = await Promise.allSettled([
+        const [overviewResult, skillsResult, imagesResult, reportResult] = await Promise.allSettled([
             fetchFileContent(repo.name, 'OVERVIEW.md'),
             fetchFileContent(repo.name, 'SKILLS.md'),
-            fetchImageAssets(repo.name)
+            fetchImageAssets(repo.name),
+            checkReportExists(repo.name)
         ]);
 
         // Handle results
         enrichedRepo.overview = overviewResult.status === 'fulfilled' ? overviewResult.value : null;
         enrichedRepo.skills = skillsResult.status === 'fulfilled' ? skillsResult.value : null;
         enrichedRepo.images = imagesResult.status === 'fulfilled' ? imagesResult.value : [];
+        enrichedRepo.hasReport = reportResult.status === 'fulfilled' ? reportResult.value : false;
 
-        console.log(`Enriched ${repo.name}: overview=${!!enrichedRepo.overview}, skills=${!!enrichedRepo.skills}, images=${enrichedRepo.images.length}`);
+        console.log(`Enriched ${repo.name}: overview=${!!enrichedRepo.overview}, skills=${!!enrichedRepo.skills}, images=${enrichedRepo.images.length}, report=${enrichedRepo.hasReport}`);
 
     } catch (error) {
         console.warn(`Error enriching repository ${repo.name}:`, error);
@@ -125,6 +127,7 @@ async function enrichRepositoryData(repo) {
         enrichedRepo.overview = null;
         enrichedRepo.skills = null;
         enrichedRepo.images = [];
+        enrichedRepo.hasReport = false;
     }
 
     return enrichedRepo;
@@ -188,6 +191,30 @@ async function fetchImageAssets(repoName) {
     }
 
     return [];
+}
+
+async function checkReportExists(repoName) {
+    try {
+        // Add timeout to prevent hanging requests
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+        const response = await fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/contents/results/report.html`, {
+            signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        return response.ok;
+    } catch (error) {
+        if (error.name === 'AbortError') {
+            console.warn(`Timeout checking report.html for ${repoName}`);
+        } else {
+            console.warn(`Could not check report.html for ${repoName}:`, error);
+        }
+    }
+
+    return false;
 }
 
 function updateStats() {
@@ -335,6 +362,11 @@ function createProjectCard(repo) {
                     ${repo.homepage ? `
                         <a href="${repo.homepage}" target="_blank" class="project-link">
                             <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                    ` : ''}
+                    ${repo.hasReport ? `
+                        <a href="https://github.com/${GITHUB_USERNAME}/${repo.name}/blob/main/results/report.html" target="_blank" class="project-link project-link-report">
+                            <i class="fas fa-chart-bar"></i> View Report
                         </a>
                     ` : ''}
                 </div>
