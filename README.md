@@ -19,7 +19,7 @@ I wanted to build a platoform to showcase my work, my side projects and my effor
 
 ## View It Live
 
-Visit my portfolio to see the full experience: [\[Portfolio\]](https://bitarah.github.io/projects.html)
+Visit my portfolio to see the full experience: [Portfolio](https://bitarah.github.io/projects.html)
 
 ## Let's Connect
 
