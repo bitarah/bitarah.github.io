@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education and Continuous Learning - Bita Rahmat Zadeh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="projects.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Education Page Styles */
+        .education-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .education-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .education-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(34, 211, 238, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(34, 211, 238, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Education Cards Grid */
+        .education-grid {
+            display: grid;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .education-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .education-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .education-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Card Header with Gradient */
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 2.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        .degree-info {
+            position: relative;
+            z-index: 2;
+        }
+
+        .institution-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .degree-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            line-height: 1.2;
+        }
+
+        .education-period {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .specialization-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 2.5rem;
+        }
+
+        .education-description {
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Tabbed Content */
+        .education-tabs {
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            border-radius: 12px 12px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Enhanced Course Cards */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .course-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-color), var(--primary-color));
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .course-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .course-title {
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .course-badge {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 1rem;
+            text-transform: uppercase;
+        }
+
+        .course-provider {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-date {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Achievement Cards */
+        .achievement-card {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(34, 197, 94, 0.1));
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 100px;
+            height: 100px;
+            background: rgba(34, 211, 238, 0.1);
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        .achievement-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-title {
+            color: var(--text-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-description {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Progress Indicators */
+        .progress-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(34, 211, 238, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(34, 211, 238, 0.1);
+        }
+
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-label {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .progress-percentage {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* Accordion Styles */
+        .course-accordion {
+            margin-top: 1.5rem;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            border-color: var(--accent-color);
+        }
+
+        .accordion-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            background: var(--bg-color);
+            border: none;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .accordion-header:hover {
+            background: rgba(34, 211, 238, 0.05);
+        }
+
+        .accordion-header.active {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--accent-color);
+        }
+
+        .course-count {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin: 0 1rem;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            color: var(--accent-color);
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            background: var(--card-bg);
+        }
+
+        .course-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .course-list-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .course-list-item:hover {
+            background: rgba(34, 211, 238, 0.05);
+            border-left-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .education-container {
+                padding: 1rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .stat-item {
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .card-header {
+                padding: 2rem;
+            }
+
+            .degree-title {
+                font-size: 1.5rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-buttons {
+                justify-content: center;
+            }
+
+            .tab-button {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <span class="code-bracket">&lt;</span>
+                    <span class="nav-name">BitaRZ</span>
+                    <span class="code-bracket">/&gt;</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="work-history.html">Work History</a></li>
+                <li><a href="education.html" class="active">Education & Continuous Learning</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="projects-main">
+        <div class="education-container">
+            <!-- Hero Section -->
+            <section class="education-hero">
+                <h1 class="page-title">
+                    <span class="code-text">const</span>
+                    <span class="highlight-text">education</span>
+                    <span class="code-text">=</span>
+                    <span class="brace">{</span>
+                </h1>
+                <p class="page-subtitle">
+                    Academic excellence through telecommunications engineering, AI innovation, and continuous learning
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">2</span>
+                        <span class="stat-label">Degrees</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">23+</span>
+                        <span class="stat-label">University Courses</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">6+</span>
+                        <span class="stat-label">Professional Certifications</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">Volunteer Roles</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education Cards -->
+            <section class="education-grid" id="educationGrid">
+                <!-- Education items will be dynamically generated -->
+            </section>
+
+            <div class="closing-brace">
+                <span class="brace">}</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Bita Rahmat Zadeh. Built listening to Taytay and lots of ☕</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Enhanced Education Data Structure
+        const educationData = [
+            {
+                id: 'masters',
+                type: 'degree',
+                institution: 'Politecnico di Milano',
+                degree: 'Master of Science in Telecommunication Engineering',
+                period: 'February 2021 - October 2024',
+                location: 'Milan, Italy',
+                specialization: 'Wireless Networks & AI Applications in Telecom',
+                icon: 'fas fa-university',
+                description: 'Specialized in advanced telecommunications with multidisciplinary training in network design, deep learning applications, digital signal processing, and wireless propagation. Focused on AI-driven solutions for communication systems and Internet services.',
+                courseCategories: [
+                    {
+                        category: 'Telecommunications (ING-INF/03)',
+                        courses: [
+                            'Multimedia Internet', 'Localization, Navigation and Smart Mobility',
+                            'Wireless Networks', 'Internet of Things', 'Communication Network Design',
+                            'Information Theory', 'Geophysical Imaging', 'Advanced Digital Signal Processing'
+                        ]
+                    },
+                    {
+                        category: 'Information Processing Systems (ING-INF/05)',
+                        courses: [
+                            'Business Information Systems 1', 'Computing Infrastructures',
+                            'Artificial Neural Networks and Deep Learning', 'Recommender Systems',
+                            'Image Analysis and Computer Vision', 'Performance Evaluation and Applications'
+                        ]
+                    },
+                    {
+                        category: 'Electromagnetic Fields (ING-INF/02)',
+                        courses: [
+                            'Wireless and Mobile Propagation'
+                        ]
+                    },
+                    {
+                        category: 'Mathematics (MAT/09, MAT/05)',
+                        courses: [
+                            'Foundations of Operations Research', 'Game Theory'
+                        ]
+                    }
+                ],
+                academicProjects: [
+                    {
+                        title: 'Neural Network Classifiers & Time Series Forecasting',
+                        description: 'Designed and trained neural network classifiers and forecasting models to predict categorical outcomes and multivariate time series.',
+                        period: 'Oct 2021 - Jan 2022'
+                    },
+                    {
+                        title: 'Vehicle Counting System with YOLO & Kalman Filters',
+                        description: 'Accurate vehicle counting using detection (YOLO) and tracking (Kalman filters) in video sequences.',
+                        period: 'Oct 2022 - Feb 2023'
+                    },
+                    {
+                        title: 'Video Processing Workstation Optimization',
+                        description: 'Optimized a video processing workstation\'s throughput via simulation and mathematical modeling.',
+                        period: 'July 2023'
+                    },
+                    {
+                        title: 'Adaptive Audio Signal Processing',
+                        description: 'Developed a MATLAB-based signal processing solution to reduce interference in stereo audio signals, enhancing clarity through adaptive filtering. This project improved audio quality and established a robust framework for real-time noise handling.',
+                        period: 'Jun 2023'
+                    },
+                    {
+                        title: 'MIMO System Estimation & Deconvolution',
+                        description: 'Developed and refined MIMO system estimation and deconvolution techniques to boost filter response and signal accuracy in noisy environments.',
+                        period: 'Nov 2023 - Dec 2023'
+                    },
+                    {
+                        title: 'Private Mobile Radio Network Design',
+                        description: 'Engineered a Private Mobile Radio network using DMR technology with simulation tools for coverage prediction.',
+                        period: 'May 2023'
+                    },
+                    {
+                        title: 'IP over WDM Network Performance Evaluation',
+                        description: 'Evaluated network performance to optimize routing and spectrum assignments in IP over WDM environments.',
+                        period: 'Oct 2022 - Jan 2023'
+                    },
+                    {
+                        title: 'IoT & Network Security Projects',
+                        description: 'Led projects on traffic analysis using Wireshark, integrated IoT platforms like ThingSpeak, and developed embedded applications using TinyOS with TOSSIM simulation, emphasizing robust project management and security analysis.',
+                        period: 'Feb 2021 - May 2022'
+                    }
+                ]
+            },
+            {
+                id: 'bachelors',
+                type: 'degree',
+                institution: 'Shiraz University',
+                degree: 'Bachelor of Science in Electrical Engineering',
+                period: 'September 2015 - July 2020',
+                location: 'Shiraz, Iran',
+                specialization: 'Communications Engineering',
+                icon: 'fas fa-graduation-cap',
+                description: 'Built a solid foundation in electrical engineering with focus on communications. Specialized in signal processing, communication theory, and electronic systems design.',
+                courseCategories: [
+                    {
+                        category: 'Communications',
+                        courses: [
+                            'Communication Systems I', 'Communication Systems II', 'Antenna I',
+                            'Microwave I', 'Communication Circuits', 'Digital Signal Processing',
+                            'Signal and Systems', 'Computer Networks', 'Electromagnetics',
+                            'Field and Wave Electromagnetics', 'Communication Circuit Lab'
+                        ]
+                    },
+                    {
+                        category: 'Electronics',
+                        courses: [
+                            'Electronics I', 'Electronics II', 'Electronics III', 'Logic Circuits',
+                            'Electronics I Lab', 'Electronics II Lab', 'Logic Circuits Lab',
+                            'Computer Architecture', 'Microprocessors I', 'Microprocessors I Lab'
+                        ]
+                    },
+                    {
+                        category: 'Control Systems',
+                        courses: [
+                            'Linear Control Systems', 'Linear Control Systems Lab'
+                        ]
+                    },
+                    {
+                        category: 'Power Systems',
+                        courses: [
+                            'Electrical Machinery I', 'Electrical Machinery II', 'Power System Analysis I',
+                            'Electrical Machinery Lab I'
+                        ]
+                    },
+                    {
+                        category: 'Basic Engineering',
+                        courses: [
+                            'Calculus I', 'Calculus II', 'Physics 121', 'Physics 122', 'Physics Lab I',
+                            'Differential Equations', 'Linear Algebra', 'Numerical Analysis and Mathematical Software Lab',
+                            'Engineering Mathematics', 'Statistics and Probability for Engineers',
+                            'Fundamentals of Computer and Programming for Engineering Students',
+                            'Electrical Circuits I', 'Electrical Circuits II', 'Electrical Measurements',
+                            'Measurements and Circuits Lab'
+                        ]
+                    }
+                ],
+                additionalTraining: [
+                    { name: 'Deep Learning Workshop', provider: 'IEEE Shiraz University Student Branch', date: '2019', type: 'Workshop', badge: 'AI' }
+                ],
+                volunteerWork: [
+                    {
+                        title: 'IEEE Student Branch Member',
+                        description: 'Led technical workshops and professional development initiatives for engineering students.',
+                        icon: 'fas fa-users'
+                    },
+                    {
+                        title: 'Campus Charity Organizer',
+                        description: 'Coordinated fundraising activities and community outreach programs.',
+                        icon: 'fas fa-heart'
+                    },
+                    {
+                        title: 'Student Orientation Leader',
+                        description: 'Mentored new students and organized informational conferences on engineering specializations.',
+                        icon: 'fas fa-chalkboard-teacher'
+                    }
+                ],
+                academicProjects: [
+                    {
+                        title: 'Eye-Tracking System for Accessibility & ASD Research',
+                        description: 'Bachelor\'s thesis focused on developing an advanced eye-tracking system using a standard webcam. The project explored various methods for gaze tracking and pupil detection to create a robust system capable of supporting applications ranging from user interface accessibility to diagnosing and understanding neurological conditions like Autism Spectrum Disorder (ASD).',
+                        period: '2019 - 2020',
+                        type: 'Thesis'
+                    }
+                ]
+            },
+            {
+                id: 'professional',
+                type: 'professional',
+                institution: 'Professional Development',
+                degree: 'Continuous Learning & Certifications',
+                period: '2020 - Present',
+                specialization: 'Machine Learning & Advanced Programming',
+                icon: 'fas fa-certificate',
+                description: 'Ongoing professional development through specialized courses in machine learning, deep learning, and advanced programming. Focused on cutting-edge AI technologies and practical implementation skills.',
+                professionalCourses: [
+                    { name: 'Reinforcement Learning', provider: 'Hugging Face', date: '2025' },
+                    { name: 'Machine Learning', provider: 'Google Developers', date: '2025' },
+                    { name: 'Machine Learning Specialization', provider: 'Prof. Andrew Ng, Coursera', date: '2025' },
+                    { name: 'Anomaly Detection in Machine Learning', provider: 'Percipio', date: '2024' },
+                    { name: 'Advanced OpenCV with Python', provider: 'Pysourse', date: '2020' },
+                    { name: 'Advanced Python Programming', provider: 'Faradars', date: '2020' }
+                ]
+            }
+        ];
+
+        // Create modern education cards
+        function createEducationCards() {
+            const container = document.getElementById('educationGrid');
+
+            educationData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'education-card';
+                card.innerHTML = createCardHTML(item, index);
+                container.appendChild(card);
+            });
+        }
+
+        // Generate enhanced card HTML
+        function createCardHTML(item, index) {
+            const tabsHTML = generateTabsHTML(item);
+            const highlightsHTML = generateHighlights(item);
+
+            return `
+                <div class="card-header">
+                    <div class="degree-info">
+                        <div class="institution-name">${item.institution}</div>
+                        <h2 class="degree-title">${item.degree}</h2>
+                        <div class="education-period">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>${item.period}</span>
+                        </div>
+                        <div class="specialization-tag">${item.specialization}</div>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <div class="education-description">${item.description}</div>
+
+                    ${highlightsHTML}
+                    ${tabsHTML}
+                </div>
+            `;
+        }
+
+        // Generate highlights section
+        function generateHighlights(item) {
+            if (!item.highlights) return '';
+
+            return `
+                <div class="highlights-section">
+                    ${item.highlights.map(highlight => `
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                <i class="${highlight.icon}"></i>
+                            </div>
+                            <div class="achievement-title">${highlight.title}</div>
+                            <div class="achievement-description">${highlight.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Generate tabbed content
+        function generateTabsHTML(item) {
+            const tabs = [];
+
+            if (item.courseCategories) tabs.push({ id: 'courses', label: 'University Courses', type: 'courseCategories' });
+            if (item.academicProjects) tabs.push({ id: 'projects', label: 'Academic Projects', type: 'academicProjects' });
+            if (item.professionalCourses) tabs.push({ id: 'professional', label: 'Certifications & Courses', type: 'professionalCourses' });
+            if (item.additionalTraining) tabs.push({ id: 'training', label: 'Additional Training', type: 'additionalTraining' });
+            if (item.volunteerWork) tabs.push({ id: 'volunteer', label: 'Leadership & Volunteer', type: 'volunteerWork' });
+
+            if (tabs.length === 0) return '';
+
+            const tabId = `tabs-${item.id}`;
+
+            return `
+                <div class="education-tabs">
+                    <div class="tab-buttons">
+                        ${tabs.map((tab, index) => `
+                            <button class="tab-button ${index === 0 ? 'active' : ''}"
+                                    onclick="switchTab('${tabId}', '${tab.id}')">
+                                ${tab.label}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    ${tabs.map((tab, index) => `
+                        <div class="tab-content ${index === 0 ? 'active' : ''}" id="${tabId}-${tab.id}">
+                            ${generateTabContent(item, tab.type)}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Generate content for each tab type
+        function generateTabContent(item, type) {
+            switch(type) {
+                case 'courseCategories':
+                    return `
+                        <div class="course-accordion">
+                            ${item[type].map((categoryGroup, idx) => `
+                                <div class="accordion-item">
+                                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                                        <span>${categoryGroup.category}</span>
+                                        <span class="course-count">${categoryGroup.courses.length} courses</span>
+                                        <i class="fas fa-chevron-down accordion-icon"></i>
+                                    </button>
+                                    <div class="accordion-content" style="display: none">
+                                        <ul class="course-list">
+                                            ${categoryGroup.courses.map(course => `
+                                                <li class="course-list-item">${course}</li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                case 'professionalCourses':
+                    return `
+                        <div class="courses-grid">
+                            ${item[type].map(course => `
+                                <div class="course-card">
+                                    <div class="course-header">
+                                        <div class="course-title">${course.name}</div>
+                                        ${course.badge ? `<div class="course-badge">${course.badge}</div>` : ''}
+                                    </div>
+                                    ${course.provider ? `<div class="course-provider">${course.provider}</div>` : ''}
+                                    ${course.date ? `<div class="course-date">${course.date}</div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                case 'additionalTraining':
+                    return `
+                        <div class="courses-grid">
+                            ${item[type].map(training => `
+                                <div class="course-card">
+                                    <div class="course-header">
+                                        <div class="course-title">${training.name}</div>
+                                        ${training.badge ? `<div class="course-badge">${training.badge}</div>` : ''}
+                                    </div>
+                                    <div class="course-provider">${training.provider}</div>
+                                    <div class="course-date">${training.date}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                case 'academicProjects':
+                    return `
+                        <div class="courses-grid">
+                            ${item[type].map(project => `
+                                <div class="course-card">
+                                    <div class="course-header">
+                                        <div class="course-title">${project.title}</div>
+                                        ${project.type ? `<div class="course-badge">${project.type}</div>` : ''}
+                                    </div>
+                                    <div class="course-provider">${project.description}</div>
+                                    ${project.period ? `<div class="course-date">${project.period}</div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                case 'volunteerWork':
+                    return `
+                        <div class="volunteer-activities">
+                            ${item[type].map(volunteer => `
+                                <div class="achievement-card">
+                                    <div class="achievement-icon">
+                                        <i class="${volunteer.icon}"></i>
+                                    </div>
+                                    <div class="achievement-title">${volunteer.title}</div>
+                                    <div class="achievement-description">${volunteer.description}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                case 'skills':
+                    return `
+                        <div class="progress-section">
+                            ${item[type].map(skill => `
+                                <div class="progress-item">
+                                    <div class="progress-header">
+                                        <span class="progress-label">${skill.name}</span>
+                                        <span class="progress-percentage">${skill.percentage}%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 0%" data-width="${skill.percentage}%"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                default:
+                    return '';
+            }
+        }
+
+        // Accordion toggle functionality
+        window.toggleAccordion = function(button) {
+            const content = button.nextElementSibling;
+            const isActive = button.classList.contains('active');
+
+            // Toggle active state
+            button.classList.toggle('active');
+
+            // Slide toggle
+            if (isActive) {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        };
+
+        // Tab switching functionality
+        window.switchTab = function(tabGroup, tabId) {
+            // Remove active class from all buttons and contents in this group
+            document.querySelectorAll(`[id^="${tabGroup}"]`).forEach(el => {
+                if (el.classList.contains('tab-content')) {
+                    el.classList.remove('active');
+                }
+            });
+
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                if (btn.onclick && btn.onclick.toString().includes(tabGroup)) {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Add active class to clicked button and corresponding content
+            document.getElementById(`${tabGroup}-${tabId}`).classList.add('active');
+            event.target.classList.add('active');
+        };
+
+        // Scroll animations
+        function initializeAnimations() {
+            const cards = document.querySelectorAll('.education-card');
+            const stats = document.querySelectorAll('.stat-item');
+
+            function checkVisibility() {
+                const windowHeight = window.innerHeight;
+                const scrollTop = window.pageYOffset;
+
+                // Animate cards
+                cards.forEach((card, index) => {
+                    const cardTop = card.offsetTop;
+                    const triggerPoint = scrollTop + windowHeight * 0.8;
+
+                    if (triggerPoint > cardTop && !card.classList.contains('animate')) {
+                        setTimeout(() => {
+                            card.classList.add('animate');
+                            // Animate progress bars if they exist
+                            const progressBars = card.querySelectorAll('.progress-fill');
+                            progressBars.forEach(bar => {
+                                setTimeout(() => {
+                                    bar.style.width = bar.dataset.width;
+                                }, 300);
+                            });
+                        }, index * 200);
+                    }
+                });
+
+                // Animate stats
+                stats.forEach((stat, index) => {
+                    const statTop = stat.offsetTop;
+                    const triggerPoint = scrollTop + windowHeight * 0.9;
+
+                    if (triggerPoint > statTop && !stat.classList.contains('animate')) {
+                        setTimeout(() => {
+                            stat.classList.add('animate');
+                        }, index * 100);
+                    }
+                });
+            }
+
+            // Initial check
+            checkVisibility();
+
+            // Listen for scroll
+            window.addEventListener('scroll', checkVisibility);
+            window.addEventListener('resize', checkVisibility);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createEducationCards();
+            initializeAnimations();
+        });
+    </script>
+</body>
+</html>

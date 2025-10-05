@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work History - Bita Rahmat Zadeh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="projects.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Work History Page Styles */
+        .work-history-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .work-history-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .work-history-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .career-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(34, 211, 238, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(34, 211, 238, 0.1);
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Work Experience Cards Grid */
+        .work-history-grid {
+            display: grid;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .work-experience-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .work-experience-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .work-experience-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Card Header with Company Branding */
+        .work-card-header {
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+        }
+
+        .work-card-header.current {
+            background: linear-gradient(135deg, #10b981, #34d399);
+        }
+
+        .work-card-header.research {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        }
+
+        .work-card-header.internship {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+
+        .work-card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        .work-header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .company-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+        }
+
+        .work-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .company-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .position-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            line-height: 1.2;
+        }
+
+        .work-duration {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .duration-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+        }
+
+        .work-summary {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Card Content */
+        .work-card-content {
+            padding: 2.5rem;
+        }
+
+        /* Tabbed Content for Work Details */
+        .work-tabs {
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .work-tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .work-tab-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            border-radius: 12px 12px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .work-tab-button.active {
+            color: var(--primary-color);
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .work-tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .work-tab-content {
+            display: none;
+        }
+
+        .work-tab-content.active {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-color), var(--primary-color));
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .project-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            color: var(--text-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 0;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            margin-left: 1rem;
+        }
+
+        .project-description {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-impact {
+            background: rgba(34, 211, 238, 0.1);
+            padding: 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color);
+            font-size: 0.9rem;
+            color: var(--text-color);
+            font-style: italic;
+        }
+
+        /* Skills Section with Categories */
+        .skills-section {
+            margin-top: 2rem;
+        }
+
+        .skills-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skills-category {
+            background: rgba(34, 211, 238, 0.05);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(34, 211, 238, 0.1);
+        }
+
+        .category-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
+        }
+
+        /* Impact Metrics */
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(34, 197, 94, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(34, 211, 238, 0.2);
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .work-history-container {
+                padding: 1rem;
+            }
+
+            .career-stats {
+                gap: 1.5rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+                min-width: 100px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .work-card-header {
+                padding: 2rem;
+            }
+
+            .work-header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .company-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .position-title {
+                font-size: 1.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .work-tab-buttons {
+                justify-content: center;
+            }
+
+            .work-tab-button {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <span class="code-bracket">&lt;</span>
+                    <span class="nav-name">BitaRZ</span>
+                    <span class="code-bracket">/&gt;</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="work-history.html" class="active">Work History</a></li>
+                <li><a href="education.html">Education & Continuous Learning</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="projects-main">
+        <div class="work-history-container">
+            <!-- Hero Section -->
+            <section class="work-history-hero">
+                <h1 class="page-title">
+                    <span class="code-text">const</span>
+                    <span class="highlight-text">workHistory</span>
+                    <span class="code-text">=</span>
+                    <span class="brace">{</span>
+                </h1>
+                <p class="page-subtitle">
+                    Professional excellence in telecommunications, AI/ML, and innovative software engineering
+                </p>
+
+                <div class="career-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">2+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">8+</span>
+                        <span class="stat-label">Major Projects</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Technologies</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">1</span>
+                        <span class="stat-label">IEEE Publication</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Work Experience Cards -->
+            <section class="work-history-grid" id="workHistoryGrid">
+                <!-- Work items will be dynamically generated -->
+            </section>
+
+            <div class="closing-brace">
+                <span class="brace">}</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Bita Rahmat Zadeh. Built listening to Taytay and lots of ☕</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Duration calculation helper
+        function calculateDuration(startDate, endDate = null) {
+            const start = new Date(startDate);
+            const end = endDate ? new Date(endDate) : new Date();
+            const diffTime = Math.abs(end - start);
+            const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30.44)); // Average days per month
+            return `${diffMonths} month${diffMonths !== 1 ? 's' : ''}`;
+        }
+
+        // Enhanced Work History Data Structure
+        const workHistoryData = [
+            {
+                id: 'ntt-data',
+                company: 'NTT DATA Italia',
+                position: 'Software Engineer - Innovative Telco Solutions',
+                period: 'July 2024 - Present',
+                startDate: '2024-07-01', // Used for duration calculation
+                duration: null, // Will be calculated
+                type: 'current',
+                location: 'Milan, Italy',
+                icon: 'fas fa-network-wired',
+                summary: 'Contributing to the design and development of software modules for 5G Stand Alone Core Networks, Slicing and Automation processes. Working on innovative telecommunications solutions with focus on edge computing, API development, and network automation.',
+                achievements: [
+                    {
+                        icon: 'fas fa-code',
+                        title: 'Backend & API Development Excellence',
+                        description: 'Architected and developed scalable backend systems and APIs using C# ASP.NET Core and Python, implementing end-to-end solutions including business logic, database integration, authentication, and comprehensive error handling. Designed modular architectures with OpenAPI specifications to ensure clear integration standards and system interoperability across telecommunication service platforms.'
+                    },
+                    {
+                        icon: 'fas fa-cloud',
+                        title: 'Cloud-Native Infrastructure & Automation',
+                        description: 'Engineered automation solutions leveraging Kubernetes, Helm, Docker, and Apache Airflow to orchestrate complex workflows for application lifecycle management. Developed reusable deployment templates and modular plugins that ensure consistent, reliable operations across distributed cloud environments, significantly improving operational efficiency and deployment consistency.'
+                    },
+                    {
+                        icon: 'fas fa-network-wired',
+                        title: 'Telecommunications Software Innovation',
+                        description: 'Delivered innovative solutions for 5G networks and edge computing environments, integrating real-time geolocation data, network topology management, and SQL-based data operations. Contributed to AI-driven network automation initiatives and advanced analytics platforms using Grafana, supporting decision-making across distributed telecommunication systems while ensuring regulatory compliance and high availability.'
+                    }
+                ],
+                skillCategories: [
+                    {
+                        title: 'Programming Languages',
+                        icon: 'fas fa-code',
+                        skills: ['Python', 'C#', 'Golang', 'SQL']
+                    },
+                    {
+                        title: 'Frameworks & APIs',
+                        icon: 'fas fa-layer-group',
+                        skills: ['ASP.NET Core', 'OpenAPI/Swagger', 'RESTful APIs']
+                    },
+                    {
+                        title: 'Cloud & DevOps',
+                        icon: 'fas fa-cloud',
+                        skills: ['Azure Digital Twin', 'Kubernetes', 'Helm', 'Docker']
+                    },
+                    {
+                        title: 'Data & Orchestration',
+                        icon: 'fas fa-database',
+                        skills: ['Redis', 'PostgreSQL', 'Apache Airflow', 'Celery']
+                    },
+                    {
+                        title: 'Telecommunications',
+                        icon: 'fas fa-broadcast-tower',
+                        skills: ['5G Networks', 'Edge Computing', 'Network Automation']
+                    },
+                    {
+                        title: 'Monitoring & Analytics',
+                        icon: 'fas fa-chart-bar',
+                        skills: ['Grafana', 'Network Monitoring', 'Performance Analytics']
+                    }
+                ]
+            },
+            {
+                id: 'polimi-research',
+                company: 'BONSAI Lab - Politecnico di Milano',
+                position: 'Research Assistant (Master\'s Thesis)',
+                period: 'October 2023 - August 2024',
+                startDate: '2023-10-01',
+                endDate: '2024-08-31',
+                duration: '11 months', // Fixed duration
+                type: 'research',
+                location: 'Milan, Italy',
+                icon: 'fas fa-microscope',
+                summary: 'Developed cost-efficient optimization strategies for metro optical networks supporting 5G advancements using Genetic Algorithms in collaboration with SM-Optics. Focused on integrating 10G, 100G, and 200G technologies to reduce deployment costs and improve network performance and compatibility.',
+                achievements: [
+                    { icon: 'fas fa-award', title: 'Research Excellence', description: 'Developed a novel Genetic Algorithm chromosome structure for OTN board cost minimization, achieving up to 61% cost savings' },
+                    { icon: 'fas fa-file-alt', title: 'IEEE Publication', description: 'Co-authored and published <a href="https://ieeexplore.ieee.org/abstract/document/11125267" target="_blank" style="color: var(--accent-color); text-decoration: underline;">"An Overview on Multi-Layer Design of OTN-over-WDM Metro Networks with Low Equipment Cost"</a> in IEEE Xplore 2025' },
+                    { icon: 'fas fa-lightbulb', title: 'Innovation Impact', description: 'Enhanced scalability by eliminating parameter fine-tuning requirements' }
+                ],
+                skillCategories: [
+                    {
+                        title: 'Programming & Algorithms',
+                        icon: 'fas fa-code',
+                        skills: ['C++', 'Genetic Algorithms', 'Algorithm Design']
+                    },
+                    {
+                        title: 'Network Technologies',
+                        icon: 'fas fa-network-wired',
+                        skills: ['Optical Networks', 'OTN', 'WDM', 'Network Optimization']
+                    },
+                    {
+                        title: 'Research & Analysis',
+                        icon: 'fas fa-search',
+                        skills: ['Research Methodology', 'Technical Writing', 'Data Analysis']
+                    }
+                ]
+            },
+            {
+                id: 'pidec-intern',
+                company: 'PIDEC - Petrochemical Industries Design and Engineering',
+                position: 'Electrical Engineer Intern',
+                period: 'June 2019 - September 2019',
+                startDate: '2019-06-01',
+                endDate: '2019-09-30',
+                duration: null, // Will be calculated
+                type: 'internship',
+                location: 'Shiraz, Iran',
+                icon: 'fas fa-industry',
+                summary: 'Gained comprehensive hands-on experience in industrial electrical engineering within the petrochemical sector. Contributed to designing critical electrical systems for oil, gas, and petrochemical facilities.',
+                achievements: [
+                    { icon: 'fas fa-hard-hat', title: 'Industrial Experience', description: 'Gained practical experience in petrochemical electrical systems design' },
+                    { icon: 'fas fa-shield-alt', title: 'Safety Compliance', description: 'Ensured designs met rigorous safety standards and regulations' },
+                    { icon: 'fas fa-drafting-compass', title: 'Technical Documentation', description: 'Created detailed technical drawings and comprehensive documentation' }
+                ],
+                skillCategories: [
+                    {
+                        title: 'Electrical Engineering',
+                        icon: 'fas fa-bolt',
+                        skills: ['Power Systems', 'Electrical Design', 'Protection Systems']
+                    },
+                    {
+                        title: 'Industrial Systems',
+                        icon: 'fas fa-industry',
+                        skills: ['Fire Alarm Systems', 'Communication Systems', 'Safety Systems']
+                    },
+                    {
+                        title: 'Documentation & Design',
+                        icon: 'fas fa-drafting-compass',
+                        skills: ['Technical Documentation', 'CAD Design', 'Industrial Standards']
+                    }
+                ]
+            }
+        ];
+
+        // Create modern work history cards
+        function createWorkHistoryCards() {
+            const container = document.getElementById('workHistoryGrid');
+
+            workHistoryData.forEach((item, index) => {
+                // Calculate duration dynamically only if not already set
+                if (item.startDate && !item.duration) {
+                    item.duration = calculateDuration(item.startDate, item.endDate);
+                }
+
+                const card = document.createElement('div');
+                card.className = 'work-experience-card';
+                card.innerHTML = createWorkCardHTML(item, index);
+                container.appendChild(card);
+            });
+        }
+
+        // Generate enhanced card HTML
+        function createWorkCardHTML(item, index) {
+            const tabsHTML = generateWorkTabsHTML(item);
+            const achievementsHTML = generateAchievements(item);
+            const metricsHTML = generateImpactMetrics(item);
+
+            return `
+                <div class="work-card-header ${item.type}">
+                    <div class="work-header-content">
+                        <div class="company-icon">
+                            <i class="${item.icon}"></i>
+                        </div>
+                        <div class="work-details">
+                            <div class="company-name">${item.company}</div>
+                            <h2 class="position-title">${item.position}</h2>
+                            <div class="work-duration">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>${item.period}</span>
+                                <span class="duration-badge">${item.duration}</span>
+                            </div>
+                            <div class="work-summary">${item.summary}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="work-card-content">
+                    ${achievementsHTML}
+                    ${tabsHTML}
+                    ${metricsHTML}
+                </div>
+            `;
+        }
+
+        // Generate achievements section
+        function generateAchievements(item) {
+            if (!item.achievements) return '';
+
+            return `
+                <div class="achievements-section">
+                    ${item.achievements.map(achievement => `
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-title">${achievement.title}</div>
+                                <div class="project-icon">
+                                    <i class="${achievement.icon}"></i>
+                                </div>
+                            </div>
+                            <div class="project-description">${achievement.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Generate tabbed content
+        function generateWorkTabsHTML(item) {
+            const tabs = [];
+
+            // Only include skills tab (projects removed as per user request)
+            if (item.skillCategories) tabs.push({ id: 'skills', label: 'Technologies', type: 'skillCategories' });
+
+            if (tabs.length === 0) return '';
+
+            const tabId = `work-tabs-${item.id}`;
+
+            return `
+                <div class="work-tabs">
+                    <div class="work-tab-buttons">
+                        ${tabs.map((tab, index) => `
+                            <button class="work-tab-button ${index === 0 ? 'active' : ''}"
+                                    onclick="switchWorkTab('${tabId}', '${tab.id}')">
+                                ${tab.label}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    ${tabs.map((tab, index) => `
+                        <div class="work-tab-content ${index === 0 ? 'active' : ''}" id="${tabId}-${tab.id}">
+                            ${generateWorkTabContent(item, tab.type)}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Generate content for each tab type
+        function generateWorkTabContent(item, type) {
+            switch(type) {
+                case 'skillCategories':
+                    return `
+                        <div class="skills-section">
+                            <div class="skills-categories">
+                                ${item[type].map(category => `
+                                    <div class="skills-category">
+                                        <div class="category-title">
+                                            <i class="${category.icon}"></i>
+                                            ${category.title}
+                                        </div>
+                                        <div class="category-skills">
+                                            ${category.skills.map(skill => `
+                                                <span class="skill-badge">${skill}</span>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+
+                default:
+                    return '';
+            }
+        }
+
+        // Generate impact metrics
+        function generateImpactMetrics(item) {
+            if (!item.impactMetrics) return '';
+
+            return `
+                <div class="impact-metrics">
+                    ${item.impactMetrics.map(metric => `
+                        <div class="metric-item">
+                            <div class="metric-value">${metric.value}</div>
+                            <div class="metric-label">${metric.label}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Tab switching functionality
+        window.switchWorkTab = function(tabGroup, tabId) {
+            // Remove active class from all buttons and contents in this group
+            document.querySelectorAll(`[id^="${tabGroup}"]`).forEach(el => {
+                if (el.classList.contains('work-tab-content')) {
+                    el.classList.remove('active');
+                }
+            });
+
+            document.querySelectorAll('.work-tab-button').forEach(btn => {
+                if (btn.onclick && btn.onclick.toString().includes(tabGroup)) {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Add active class to clicked button and corresponding content
+            document.getElementById(`${tabGroup}-${tabId}`).classList.add('active');
+            event.target.classList.add('active');
+        };
+
+        // Scroll animations
+        function initializeWorkAnimations() {
+            const cards = document.querySelectorAll('.work-experience-card');
+            const stats = document.querySelectorAll('.stat-card');
+
+            function checkVisibility() {
+                const windowHeight = window.innerHeight;
+                const scrollTop = window.pageYOffset;
+
+                // Animate cards
+                cards.forEach((card, index) => {
+                    const cardTop = card.offsetTop;
+                    const triggerPoint = scrollTop + windowHeight * 0.8;
+
+                    if (triggerPoint > cardTop && !card.classList.contains('animate')) {
+                        setTimeout(() => {
+                            card.classList.add('animate');
+                        }, index * 200);
+                    }
+                });
+
+                // Animate stats
+                stats.forEach((stat, index) => {
+                    const statTop = stat.offsetTop;
+                    const triggerPoint = scrollTop + windowHeight * 0.9;
+
+                    if (triggerPoint > statTop && !stat.classList.contains('animate')) {
+                        setTimeout(() => {
+                            stat.classList.add('animate');
+                        }, index * 100);
+                    }
+                });
+            }
+
+            // Initial check
+            checkVisibility();
+
+            // Listen for scroll
+            window.addEventListener('scroll', checkVisibility);
+            window.addEventListener('resize', checkVisibility);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createWorkHistoryCards();
+            initializeWorkAnimations();
+        });
+    </script>
+</body>
+</html>

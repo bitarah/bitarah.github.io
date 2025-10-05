@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Projects - Bita Rahmat Zadeh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="projects.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <span class="code-bracket">&lt;</span>
+                    <span class="nav-name">BitaRZ</span>
+                    <span class="code-bracket">/&gt;</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="work-history.html">Work History</a></li>
+                <li><a href="education.html">Education & Continuous Learning</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="projects-main">
+        <div class="container">
+            <header class="projects-header">
+                <h1 class="page-title">
+                    <span class="code-text">const</span>
+                    <span class="highlight-text">sideProjects</span>
+                    <span class="code-text">=</span>
+                    <span class="brace">[</span>
+                </h1>
+                <p class="page-subtitle">
+                    Exploring ideas, learning new technologies, and building cool stuff in my spare time
+                </p>
+                <div class="projects-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="total-repos">-</span>
+                        <span class="stat-label">Repositories</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="total-languages">-</span>
+                        <span class="stat-label">Languages</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="total-stars">-</span>
+                        <span class="stat-label">Stars</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="projects-filters">
+                <div class="filter-section">
+                    <label for="language-filter">Filter by Language:</label>
+                    <select id="language-filter">
+                        <option value="">All Languages</option>
+                    </select>
+                </div>
+                <div class="filter-section">
+                    <label for="sort-filter">Sort by:</label>
+                    <select id="sort-filter">
+                        <option value="updated">Last Updated</option>
+                        <option value="created">Created Date</option>
+                        <option value="name">Name</option>
+                        <option value="stars">Stars</option>
+                    </select>
+                </div>
+                <button id="refresh-btn" class="refresh-btn">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+
+            <div class="loading-container" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Fetching repositories from GitHub...</p>
+            </div>
+
+            <div class="error-container" id="error-container" style="display: none;">
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="error-message">Failed to load repositories</span>
+                </div>
+                <button onclick="loadProjects()" class="retry-btn">Try Again</button>
+            </div>
+
+            <div class="projects-grid" id="projects-grid">
+                <!-- Projects will be dynamically loaded here -->
+            </div>
+
+            <div class="closing-brace">
+                <span class="brace">]</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Bita Rahmat Zadeh. Built listening to Taytay and lots of ☕</p>
+        </div>
+    </footer>
+
+    <script src="script.js?v=3"></script>
+    <script src="projects.js?v=3"></script>
+</body>
+</html>
