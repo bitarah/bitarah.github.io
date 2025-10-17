@@ -28,6 +28,10 @@ const LANGUAGE_COLORS = {
 let allRepositories = [];
 let filteredRepositories = [];
 
+// Cache configuration
+const CACHE_KEY = 'github_repos_cache';
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+
 // Initialize page when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     loadProjects();
@@ -41,16 +45,68 @@ function setupEventListeners() {
 
     languageFilter.addEventListener('change', filterAndSortProjects);
     sortFilter.addEventListener('change', filterAndSortProjects);
-    refreshBtn.addEventListener('click', loadProjects);
+    refreshBtn.addEventListener('click', () => loadProjects(true)); // Force refresh
 }
 
-async function loadProjects() {
+function getCachedData() {
+    try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (!cached) return null;
+
+        const { data, timestamp } = JSON.parse(cached);
+        const now = Date.now();
+
+        // Check if cache is still valid
+        if (now - timestamp < CACHE_DURATION) {
+            console.log('Using cached data');
+            return data;
+        } else {
+            console.log('Cache expired');
+            localStorage.removeItem(CACHE_KEY);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error reading cache:', error);
+        return null;
+    }
+}
+
+function setCachedData(data) {
+    try {
+        const cacheObject = {
+            data: data,
+            timestamp: Date.now()
+        };
+        localStorage.setItem(CACHE_KEY, JSON.stringify(cacheObject));
+        console.log('Data cached successfully');
+    } catch (error) {
+        console.error('Error caching data:', error);
+    }
+}
+
+async function loadProjects(forceRefresh = false) {
     console.log('Starting to load projects...');
     showLoading();
     hideError();
 
     try {
-        console.log('Fetching repositories...');
+        // Check for cached data first (unless force refresh)
+        if (!forceRefresh) {
+            const cachedData = getCachedData();
+            if (cachedData) {
+                allRepositories = cachedData;
+                filteredRepositories = [...allRepositories];
+
+                updateStats();
+                populateLanguageFilter();
+                filterAndSortProjects();
+                hideLoading();
+                console.log('Projects loaded from cache');
+                return;
+            }
+        }
+
+        console.log('Fetching repositories from GitHub...');
         // Fetch repositories
         const repos = await fetchRepositories();
         console.log(`Found ${repos.length} total repositories`);
@@ -73,6 +129,9 @@ async function loadProjects() {
         allRepositories = repositoriesWithData;
         filteredRepositories = [...allRepositories];
 
+        // Cache the data
+        setCachedData(allRepositories);
+
         console.log('Updating UI...');
         updateStats();
         populateLanguageFilter();
@@ -82,8 +141,26 @@ async function loadProjects() {
 
     } catch (error) {
         console.error('Error loading projects:', error);
-        showError(`Failed to load repositories: ${error.message}`);
-        hideLoading();
+
+        // Try to load from cache as fallback
+        const cachedData = getCachedData();
+        if (cachedData) {
+            console.log('Using cached data as fallback');
+            allRepositories = cachedData;
+            filteredRepositories = [...allRepositories];
+
+            updateStats();
+            populateLanguageFilter();
+            filterAndSortProjects();
+            hideLoading();
+
+            // Show a warning but still display cached data
+            showError(`Could not refresh from GitHub (${error.message}). Showing cached data.`);
+            setTimeout(hideError, 5000); // Auto-hide after 5 seconds
+        } else {
+            showError(`Failed to load repositories: ${error.message}`);
+            hideLoading();
+        }
     }
 }
 
