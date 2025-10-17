@@ -169,7 +169,14 @@ async function fetchRepositories() {
 
     if (!response.ok) {
         if (response.status === 403) {
-            throw new Error('GitHub API rate limit exceeded. Please try again later.');
+            const rateLimitReset = response.headers.get('X-RateLimit-Reset');
+            if (rateLimitReset) {
+                const resetTime = new Date(rateLimitReset * 1000);
+                const now = new Date();
+                const minutesUntilReset = Math.ceil((resetTime - now) / 60000);
+                throw new Error(`GitHub API rate limit exceeded. Resets in ${minutesUntilReset} minute(s) at ${resetTime.toLocaleTimeString()}`);
+            }
+            throw new Error('GitHub API rate limit exceeded. Please try again in about an hour.');
         }
         throw new Error(`GitHub API error: ${response.status}`);
     }
