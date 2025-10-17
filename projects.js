@@ -220,11 +220,8 @@ async function checkReportExists(repoName) {
 function updateStats() {
     const totalRepos = allRepositories.length;
     const languages = [...new Set(allRepositories.map(repo => repo.language).filter(Boolean))];
-    const totalStars = allRepositories.reduce((sum, repo) => sum + repo.stargazers_count, 0);
-
     document.getElementById('total-repos').textContent = totalRepos;
     document.getElementById('total-languages').textContent = languages.length;
-    document.getElementById('total-stars').textContent = totalStars;
 }
 
 function populateLanguageFilter() {
@@ -261,8 +258,6 @@ function filterAndSortProjects() {
                 return a.name.localeCompare(b.name);
             case 'created':
                 return new Date(b.created_at) - new Date(a.created_at);
-            case 'stars':
-                return b.stargazers_count - a.stargazers_count;
             case 'updated':
             default:
                 return new Date(b.updated_at) - new Date(a.updated_at);
@@ -344,7 +339,6 @@ function createProjectCard(repo) {
                         ` : '<span>No language</span>'}
                     </div>
                     <div class="project-stats">
-                        <span><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
                         <span><i class="fas fa-code-branch"></i> ${repo.forks_count}</span>
                     </div>
                 </div>
