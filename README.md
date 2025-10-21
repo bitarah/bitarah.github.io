@@ -25,7 +25,7 @@ Visit my portfolio to see the full experience: [Portfolio](https://bitarah.githu
 
 I'm always interested in challenging projects and opportunities to collaborate with talented teams. If you'd like to discuss potential opportunities or just talk tech, I'd love to hear from you.
 
-- 📧 Portfolio: [My Portfolio](https://bitarah.github.io/)
+- 📧 Email: [Email me](mailto:bitarahmatzadeh@gmail.com)
 - 💼 LinkedIn: [My LinkedIn](https://www.linkedin.com/in/bita-rahmat-zadeh-240a3b1b0/)
 - 💻 GitHub: You're already here!
 
